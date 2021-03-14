@@ -1,0 +1,10 @@
+Loading a single dungeon (landblock)
+
+getDungeon(id)
+  f = dat.getFile(id)
+  landblock = new Landblock(f.getReader)
+
+
+getFile(id)
+  fe = findFile(id)
+  return DatFile(fe)

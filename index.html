@@ -1,0 +1,20 @@
+<body>
+  <p>Portal: <input id="portalfile" type="file"></p>
+  <p>Cell: <input id="cellfile" type="file"></p>
+  <p>
+    <button id="load">Load</button>
+    <button id="work">Work</button>
+    <button id="draw">Draw</button>
+  </p>
+  <script src="/lib/shared.js"></script>
+  <script src="/lib/archive.js"></script>
+  <script src="/lib/cell.js"></script>
+  <script src="/lib/environment.js"></script>
+  <script src="/lib/dungeon.js"></script>
+  <script src="/index.js"></script>
+  <script>
+      document.querySelectorAll("#load")[0].onclick = load;
+      document.querySelectorAll("#work")[0].onclick = work;
+      document.querySelectorAll("#draw")[0].onclick = draw;
+  </script>
+</body>
