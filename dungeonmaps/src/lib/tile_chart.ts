@@ -27,6 +27,13 @@ export const draw = function (el, data) {
     .domain(d3.extent(data, d => d.y))
     .range([height - margin.bottom, margin.top]);
 
+  // Square up x and y domains
+  if (x.domain()[1] < Math.abs(y.domain()[0])) {
+    x.domain([d3.min(data, d => d.x), Math.abs(y.domain()[0])])
+  } else if (x.domain()[1] > Math.abs(y.domain()[0])) {
+    y.domain([-x.domain()[1], d3.max(data, d => d.y)])
+  }
+
   grouped.forEach(data => {
     const svg = d3.select(el)
       .append("svg")
