@@ -17,7 +17,6 @@ export const drawLevels = function (el, data) {
 export const draw = function (el, data) {
   // Group  by z
   const grouped = d3.group(data, d => d.z)
-  console.log(grouped)
 
   // Compute scales globally
   const x = d3.scaleLinear()
