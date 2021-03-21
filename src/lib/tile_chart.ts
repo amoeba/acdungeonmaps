@@ -19,6 +19,25 @@ enum ChartMode {
   IMAGE = "image"
 }
 
+const get_rot = function (d, x, y) {
+  let out = 0;
+  const w = d.rotation;
+
+  if (w == 1) {
+    out = 0;
+  }
+  else if (w < -0.70 && w > -0.8) {
+    out = 0;
+  }
+  else if (w > 0.70 && w < 0.8) {
+    out = 90; // This looks good
+  }
+
+  const rot_string = "rotate(" + out + "," + (x(d.x) + 5) + "," + (y(d.y) + 5) + ")";
+  console.log(rot_string);
+  return rot_string;
+}
+
 export const draw = function (el, data, options: ChartOptions = {}) {
   let mode = options.mode || ChartMode.TILE
 
@@ -66,6 +85,7 @@ export const draw = function (el, data, options: ChartOptions = {}) {
         .attr("height", d => y(d.y) - y(d.y + 10))
         .attr("width", d => x(d.x) - x(d.x - 10))
         .attr("fill", color)
+        .attr("transform", d => get_rot(d, x, y))
     } else if (mode === ChartMode.IMAGE) {
       svg
         .append("g")
@@ -78,6 +98,7 @@ export const draw = function (el, data, options: ChartOptions = {}) {
         .attr("width", d => x(d.x) - x(d.x - 10))
         .attr("xlink:href", d => "/tiles/" + d.environment_id + ".bmp")
         .attr("fill", color)
+        .attr("transform", d => get_rot(d, x, y))
     }
   }
 });
