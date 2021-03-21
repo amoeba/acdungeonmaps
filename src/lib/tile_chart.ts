@@ -8,13 +8,20 @@ const margin = {
   bottom: 0,
   left: 0
 }
-
 const color = "rgba(0, 0, 0, 0.1)";
 
-export const drawLevels = function (el, data) {
-
+interface ChartOptions {
+  mode?: ChartMode
 }
-export const draw = function (el, data) {
+
+enum ChartMode {
+  TILE = "tile",
+  IMAGE = "image"
+}
+
+export const draw = function (el, data, options: ChartOptions = {}) {
+  let mode = options.mode || ChartMode.TILE
+
   // Group  by z
   const grouped = d3.group(data, d => d.z)
 
@@ -47,15 +54,30 @@ export const draw = function (el, data) {
       .append("text")
       .text("Z: " + data[0].z)
 
-    svg
-      .append("g")
-      .selectAll("rect")
-      .data(data)
-      .join("rect")
-      .attr("x", d => x(d.x))
-      .attr("y", d => y(d.y))
-      .attr("height", d => y(d.y) - y(d.y + 10))
-      .attr("width", d => x(d.x) - x(d.x - 10))
-      .attr("fill", color)
-  });
-}
+
+    if (mode === ChartMode.TILE) {
+      svg
+        .append("g")
+        .selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", d => x(d.x))
+        .attr("y", d => y(d.y))
+        .attr("height", d => y(d.y) - y(d.y + 10))
+        .attr("width", d => x(d.x) - x(d.x - 10))
+        .attr("fill", color)
+    } else if (mode === ChartMode.IMAGE) {
+      svg
+        .append("g")
+        .selectAll("image")
+        .data(data)
+        .join("image")
+        .attr("x", d => x(d.x))
+        .attr("y", d => y(d.y))
+        .attr("height", d => y(d.y) - y(d.y + 10))
+        .attr("width", d => x(d.x) - x(d.x - 10))
+        .attr("xlink:href", d => "/tiles/" + d.environment_id + ".bmp")
+        .attr("fill", color)
+    }
+  }
+});
