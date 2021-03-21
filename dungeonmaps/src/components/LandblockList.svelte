@@ -17,7 +17,7 @@
     <ul>
       {#each data.rows as row}
         <li>
-          <a href="/dungeons/{row[0]}"><li><code>0x{row[0]}</code></li></a>
+          <a href="/dungeons/{row[0]}"><code>0x{row[0]}</code></a>
         </li>
       {/each}
     </ul>
