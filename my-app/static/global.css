@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 0.5em 1em;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: black;
+}
+
+a {
+  color: blue;
+}
+
+header,
+main {
+  margin-bottom: 1em;
+}
+
+.loading {
+  animation: 0.2s infinite alternate flash;
+}
+
+@keyframes flash {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}
