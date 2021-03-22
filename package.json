@@ -10,7 +10,7 @@
     "validate": "svelte-check --ignore src/node_modules/@sapper",
     "cleantiles": "Rscript scripts/clean_tiles.R",
     "createdb": "csvs-to-sqlite --replace-tables data/tiles.csv data/dungeons.csv data/dungeonmaps.sqlite",
-    "publishdb": "datasette publish vercel data/dungeonmaps.sqlite --project dungeonmaps"
+    "publishdb": "datasette publish vercel data/dungeonmaps.sqlite --project dungeonmapsdb"
   },
   "dependencies": {
     "compression": "^1.7.1",

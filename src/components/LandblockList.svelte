@@ -3,7 +3,7 @@
 
   const fetchLandblocks = (async () => {
     const url =
-      "https://dungeonmaps.vercel.app/dungeonmaps.json?sql=select%20*%20from%20dungeons%20limit%201000;";
+      "https://dungeonmapsdb.vercel.app/dungeonmaps.json?sql=select%20*%20from%20dungeons%20limit%201000;";
 
     const response = await fetch(url);
 
