@@ -30,7 +30,6 @@
       };
     });
 
-    console.log(JSON.stringify(data));
     draw(el, data, { mode: "image" });
   });
 </script>
