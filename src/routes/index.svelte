@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>Dungeon Maps</title>
 </svelte:head>
 
 <LandblockList />
