@@ -30,3 +30,11 @@ main {
     opacity: 100%;
   }
 }
+
+.error {
+  background-color: rgba(255, 0, 0, 0.9);
+  border: 1px solid rgba(220, 0, 0, 1);
+  border-radius: 5px;
+  padding: 0.25em 0.5em;
+  color: white;
+}

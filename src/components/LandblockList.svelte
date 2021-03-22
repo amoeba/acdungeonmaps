@@ -2,9 +2,10 @@
   import fetch from "isomorphic-unfetch";
 
   const fetchLandblocks = (async () => {
-    const response = await fetch(
-      "https://landblocks.vercel.app/landblocks.json?sql=select%20distinct(landblock_id)%20from%20landblocks%20order%20by%20landblock_id"
-    );
+    const url =
+      "https://dungeonmaps.vercel.app/dungeonmaps.json?sql=select%20*%20from%20dungeons%20limit%201000;";
+
+    const response = await fetch(url);
 
     return await response.json();
   })();
@@ -17,19 +18,20 @@
     <ul>
       {#each data.rows as row}
         <li>
-          <a href="/dungeons/{row[0]}"><code>0x{row[0]}</code></a>
+          <a href="/dungeons/{row[0]}"><code>{row[1]}</code></a>
         </li>
       {/each}
     </ul>
   {:catch error}
-    <p>An error occurred!</p>
+    <div class="error"><strong>Error:</strong> {error}</div>
   {/await}
 </div>
 
 <style>
-  div {
+  ul {
     min-height: 300px;
   }
+
   ul {
     display: flex;
     flex-wrap: wrap;
