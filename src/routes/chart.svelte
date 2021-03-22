@@ -1648,7 +1648,7 @@
   ];
 
   onMount(() => {
-    draw(target, data), { mode: "image" };
+    draw(target, data);
   });
 </script>
 

@@ -20,7 +20,7 @@ enum ChartMode {
   IMAGE = "image"
 }
 
-const get_rot = function (d, x, y) {
+const get_transform = function (d, x, y) {
   let out = 0;
   const offset = x(10) - x(5);
 
@@ -51,14 +51,7 @@ const drawSeparate = function (el, data, mode, x, y) {
       .attr("width", width)
       .attr("height", height)
 
-    const label = svg.append("g")
-      .attr("transform", "translate(0, 16)")
-
-    label
-      .append("text")
-      .text("Z: " + data[0].z)
-
-    // TODO: Simplify
+    // TODO: Simplify this
     if (mode === ChartMode.TILE) {
       svg
         .append("g")
@@ -70,7 +63,7 @@ const drawSeparate = function (el, data, mode, x, y) {
         .attr("height", d => y(d.y) - y(d.y + 10))
         .attr("width", d => x(d.x) - x(d.x - 10))
         .attr("fill", color)
-        .attr("transform", d => get_rot(d, x, y))
+        .attr("transform", d => get_transform(d, x, y))
         .attr("data-rotation", d => d.rotation)
     } else if (mode === ChartMode.IMAGE) {
       svg
@@ -84,12 +77,13 @@ const drawSeparate = function (el, data, mode, x, y) {
         .attr("width", (d: TileData) => x(d.x) - x(d.x - 10))
         .attr("xlink:href", (d: TileData) => "/tiles/" + d.environment_id + ".bmp")
         .attr("fill", color)
-        .attr("transform", (d: TileData) => get_rot(d, x, y))
+        .attr("transform", (d: TileData) => get_transform(d, x, y))
         .attr("data-rotation", (d: TileData) => d.rotation)
         .attr("onerror", "this.remove()")
     }
   });
 }
+
 export const draw = function (el, data, options: ChartOptions = {}) {
   let mode = options.mode || ChartMode.IMAGE
 

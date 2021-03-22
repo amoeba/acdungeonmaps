@@ -14,6 +14,7 @@
     "%27&size=max";
 
   let el;
+  let z = 0;
 
   onMount(async () => {
     const res = await fetch(url);
@@ -34,7 +35,7 @@
       error = "No data found for dungeon 0x" + id;
     }
 
-    draw(el, data, { mode: "image" });
+    draw(el, data);
   });
 </script>
 
