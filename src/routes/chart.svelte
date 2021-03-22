@@ -1,6 +1,6 @@
 <script type="ts">
   import { onMount } from "svelte";
-  import { draw } from "../lib/tile_chart";
+  import { draw } from "../lib/dungeon_map";
 
   let target;
 

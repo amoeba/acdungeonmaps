@@ -2,7 +2,7 @@
   import fetch from "isomorphic-unfetch";
 
   import { onMount } from "svelte";
-  import { draw } from "../lib/tile_chart";
+  import { draw } from "../lib/dungeon_map";
   import * as d3 from "d3";
 
   export let id: string;
