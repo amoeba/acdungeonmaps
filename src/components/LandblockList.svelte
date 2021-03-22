@@ -42,6 +42,6 @@
 
   li {
     display: inline-block;
-    padding: 0.25em 0.5em;
+    padding: 0 0.5em 0.5em 0;
   }
 </style>
