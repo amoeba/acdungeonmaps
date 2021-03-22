@@ -28,7 +28,7 @@ export default {
 		plugins: [
 			replace({
 				preventAssignment: true,
-				values:{
+				values: {
 					'process.browser': true,
 					'process.env.NODE_ENV': JSON.stringify(mode)
 				},
@@ -83,7 +83,7 @@ export default {
 		plugins: [
 			replace({
 				preventAssignment: true,
-				values:{
+				values: {
 					'process.browser': false,
 					'process.env.NODE_ENV': JSON.stringify(mode)
 				},
@@ -120,7 +120,7 @@ export default {
 			resolve(),
 			replace({
 				preventAssignment: true,
-				values:{
+				values: {
 					'process.browser': true,
 					'process.env.NODE_ENV': JSON.stringify(mode)
 				},

@@ -1,13 +1,16 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "dungeonmaps",
+  "description": "dungeonmaps",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper export",
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
-    "validate": "svelte-check --ignore src/node_modules/@sapper"
+    "validate": "svelte-check --ignore src/node_modules/@sapper",
+    "cleantiles": "Rscript scripts/clean_tiles.R",
+    "createdb": "csvs-to-sqlite --replace-tables data/tiles.csv data/dungeons.csv data/dungeonmaps.sqlite",
+    "publishdb": "datasette publish vercel data/dungeonmaps.sqlite --project dungeonmaps"
   },
   "dependencies": {
     "compression": "^1.7.1",
@@ -25,11 +28,12 @@
     "@rollup/plugin-babel": "^5.0.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
-    "@rollup/plugin-replace": "^2.4.0",
+    "@rollup/plugin-replace": "^2.4.1",
     "@rollup/plugin-typescript": "^6.0.0",
     "@rollup/plugin-url": "^5.0.0",
     "@tsconfig/svelte": "^1.0.10",
     "@types/compression": "^1.7.0",
+    "@types/d3": "^6.3.0",
     "@types/node": "^14.11.1",
     "@types/polka": "^0.5.1",
     "rollup": "^2.3.4",
