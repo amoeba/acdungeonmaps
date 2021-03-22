@@ -25,10 +25,13 @@
         x: Number(d.x),
         y: Number(d.y),
         z: Number(d.z),
+        rotation: Number(d.rotation),
         environment_id: Number(d.environment_id),
       };
     });
-    draw(el, data);
+
+    console.log(JSON.stringify(data));
+    draw(el, data, { mode: "image" });
   });
 </script>
 

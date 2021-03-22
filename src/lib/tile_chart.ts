@@ -21,25 +21,30 @@ enum ChartMode {
 
 const get_rot = function (d, x, y) {
   let out = 0;
-  const w = d.rotation;
+  const offset = x(10) - x(5);
+
+  const w = Number(d.rotation);
 
   if (w == 1) {
     out = 0;
   }
   else if (w < -0.70 && w > -0.8) {
-    out = 0;
+    out = -90;
   }
   else if (w > 0.70 && w < 0.8) {
-    out = 90; // This looks good
+    out = 90;
+  } else {
+    out = 180;
   }
 
-  const rot_string = "rotate(" + out + "," + (x(d.x) + 5) + "," + (y(d.y) + 5) + ")";
-  console.log(rot_string);
+  const rot_string = "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
+  // const rot_string = "rotate(" + out + ")";
+
   return rot_string;
 }
 
 export const draw = function (el, data, options: ChartOptions = {}) {
-  let mode = options.mode || ChartMode.TILE
+  let mode = options.mode || ChartMode.IMAGE
 
   // Group  by z
   const grouped = d3.group(data, d => d.z)
@@ -67,13 +72,13 @@ export const draw = function (el, data, options: ChartOptions = {}) {
       .attr("height", height)
 
     const label = svg.append("g")
-      .attr("transform", "translate(0, 14)")
+      .attr("transform", "translate(0, 16)")
 
     label
       .append("text")
       .text("Z: " + data[0].z)
 
-
+    // TODO: Simplify
     if (mode === ChartMode.TILE) {
       svg
         .append("g")
@@ -86,6 +91,7 @@ export const draw = function (el, data, options: ChartOptions = {}) {
         .attr("width", d => x(d.x) - x(d.x - 10))
         .attr("fill", color)
         .attr("transform", d => get_rot(d, x, y))
+        .attr("data-rotation", d => d.rotation)
     } else if (mode === ChartMode.IMAGE) {
       svg
         .append("g")
@@ -99,6 +105,8 @@ export const draw = function (el, data, options: ChartOptions = {}) {
         .attr("xlink:href", d => "/tiles/" + d.environment_id + ".bmp")
         .attr("fill", color)
         .attr("transform", d => get_rot(d, x, y))
+        .attr("data-rotation", d => d.rotation)
+        .attr("onerror", "this.remove()")
     }
-  }
-});
+  });
+}
