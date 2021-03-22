@@ -9,7 +9,7 @@
   let error;
 
   const url =
-    "https://dungeonmaps.vercel.app/dungeonmaps.csv?sql=select%20*%20from%20tiles%20where%20landblock_id%20=%20%27" +
+    "https://dungeonmapsdb.vercel.app/dungeonmaps.csv?sql=select%20*%20from%20tiles%20where%20landblock_id%20=%20%27" +
     id +
     "%27&size=max";
 
