@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import type { TileData } from "../types/types"
 
 const width = 300;
 const height = 300;
@@ -37,33 +38,12 @@ const get_rot = function (d, x, y) {
     out = 180;
   }
 
-  const rot_string = "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
-  // const rot_string = "rotate(" + out + ")";
-
-  return rot_string;
+  return "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
 }
 
-export const draw = function (el, data, options: ChartOptions = {}) {
-  let mode = options.mode || ChartMode.IMAGE
-
+const drawSeparate = function (el, data, mode, x, y) {
   // Group  by z
-  const grouped = d3.group(data, d => d.z)
-
-  // Compute scales globally
-  const x = d3.scaleLinear()
-    .domain(d3.extent(data, d => d.x))
-    .range([margin.left, width - margin.right]);
-
-  const y = d3.scaleLinear()
-    .domain(d3.extent(data, d => d.y))
-    .range([height - margin.bottom, margin.top]);
-
-  // Square up x and y domains
-  if (x.domain()[1] < Math.abs(y.domain()[0])) {
-    x.domain([d3.min(data, d => d.x), Math.abs(y.domain()[0])])
-  } else if (x.domain()[1] > Math.abs(y.domain()[0])) {
-    y.domain([-x.domain()[1], d3.max(data, d => d.y)])
-  }
+  const grouped = d3.group(data, (d: TileData) => d.z)
 
   grouped.forEach(data => {
     const svg = d3.select(el)
@@ -98,15 +78,36 @@ export const draw = function (el, data, options: ChartOptions = {}) {
         .selectAll("image")
         .data(data)
         .join("image")
-        .attr("x", d => x(d.x))
-        .attr("y", d => y(d.y))
-        .attr("height", d => y(d.y) - y(d.y + 10))
-        .attr("width", d => x(d.x) - x(d.x - 10))
-        .attr("xlink:href", d => "/tiles/" + d.environment_id + ".bmp")
+        .attr("x", (d: TileData) => x(d.x))
+        .attr("y", (d: TileData) => y(d.y))
+        .attr("height", (d: TileData) => y(d.y) - y(d.y + 10))
+        .attr("width", (d: TileData) => x(d.x) - x(d.x - 10))
+        .attr("xlink:href", (d: TileData) => "/tiles/" + d.environment_id + ".bmp")
         .attr("fill", color)
-        .attr("transform", d => get_rot(d, x, y))
-        .attr("data-rotation", d => d.rotation)
+        .attr("transform", (d: TileData) => get_rot(d, x, y))
+        .attr("data-rotation", (d: TileData) => d.rotation)
         .attr("onerror", "this.remove()")
     }
   });
+}
+export const draw = function (el, data, options: ChartOptions = {}) {
+  let mode = options.mode || ChartMode.IMAGE
+
+  // Compute scales globally
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, (d: TileData) => d.x))
+    .range([margin.left, width - margin.right]);
+
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, (d: TileData) => d.y))
+    .range([height - margin.bottom, margin.top]);
+
+  // Square up x and y domains
+  if (x.domain()[1] < Math.abs(y.domain()[0])) {
+    x.domain([d3.min(data, (d: TileData) => d.x), Math.abs(y.domain()[0])])
+  } else if (x.domain()[1] > Math.abs(y.domain()[0])) {
+    y.domain([-x.domain()[1], d3.max(data, (d: TileData) => d.y)])
+  }
+
+  drawSeparate(el, data, mode, x, y);
 }
