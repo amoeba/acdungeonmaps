@@ -3,5 +3,7 @@
 /src/node_modules/@sapper/
 yarn-error.log
 /__sapper__/
-
 .vercel
+etc/CellProcessor/bin
+etc/CellProcessor/.vs
+etc/CellProcessor/obj
