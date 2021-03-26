@@ -1,8 +1,5 @@
 <script type="ts">
-  import { onMount } from "svelte";
-  import { DungeonMap } from "../lib/DungeonMap";
-
-  let target;
+  import DungeonMap from "../components/DungeonMap.svelte";
 
   const data = [
     {
@@ -1646,12 +1643,6 @@
       environment_id: 218104010,
     },
   ];
-
-  let map;
-  onMount(() => {
-    map = new DungeonMap(target, data);
-    map.draw();
-  });
 </script>
 
 <svelte:head>
@@ -1660,12 +1651,4 @@
 
 <h2>Chart</h2>
 
-<!-- <button class="dothings" on:click={clickHandler}>Do things</button> -->
-<div bind:this={target} class="chart" />
-
-<style>
-  :global(svg) {
-    border: 1px solid black;
-    margin-right: 0.5em;
-  }
-</style>
+<DungeonMap {data} />
