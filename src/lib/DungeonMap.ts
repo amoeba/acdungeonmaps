@@ -9,6 +9,7 @@ const margin = {
   bottom: 50,
   left: 50
 }
+
 const color = "rgba(0, 0, 0, 0.1)";
 const tileSize = 10;
 
@@ -21,7 +22,6 @@ enum ChartMode {
   IMAGE = "image"
 }
 
-
 export class DungeonMap {
   el: Element
   data: TileData[]
@@ -30,7 +30,7 @@ export class DungeonMap {
   constructor(el: Element, data: TileData[], mode?: ChartMode) {
     this.el = el
     this.data = data
-    this.mode = mode || ChartMode.TILE
+    this.mode = mode || ChartMode.IMAGE
   }
 
   draw(options?: ChartOptions) {
@@ -57,7 +57,11 @@ export class DungeonMap {
     // Group  by z
     const grouped = d3.group(this.data, (d: TileData) => d.z)
 
-    const svg = d3.select(this.el)
+    const target = d3.select(this.el)
+
+    target.select("svg").remove();
+
+    const svg = target
       .append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -67,7 +71,7 @@ export class DungeonMap {
     grouped.forEach(data => {
       const g = svg.append("g")
         .attr("transform", "translate(" + offset + ", " + offset + ")");
-      offset += 100;
+      // offset += 100;
 
       // TODO: Simplify this
       if (this.mode === ChartMode.TILE) {
@@ -100,6 +104,16 @@ export class DungeonMap {
           .attr("onerror", "this.remove()")
       }
     });
+  }
+
+  toggle() {
+    if (this.mode === ChartMode.TILE) {
+      this.mode = ChartMode.IMAGE
+    } else {
+      this.mode = ChartMode.TILE
+    }
+
+    this.draw()
   }
 
   getTransform(d, x, y) {
