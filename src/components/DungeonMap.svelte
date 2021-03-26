@@ -2,7 +2,7 @@
   import fetch from "isomorphic-unfetch";
 
   import { onMount } from "svelte";
-  import { draw } from "../lib/dungeon_map";
+  import { DungeonMap } from "../lib/DungeonMap";
   import * as d3 from "d3";
 
   export let id: string;
@@ -35,7 +35,8 @@
       error = "No data found for dungeon 0x" + id;
     }
 
-    draw(el, data);
+    let map = new DungeonMap(el, data);
+    map.draw();
   });
 </script>
 

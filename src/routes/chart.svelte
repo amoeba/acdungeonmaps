@@ -1,6 +1,6 @@
 <script type="ts">
   import { onMount } from "svelte";
-  import { draw } from "../lib/dungeon_map";
+  import { DungeonMap } from "../lib/DungeonMap";
 
   let target;
 
@@ -1647,8 +1647,10 @@
     },
   ];
 
+  let map;
   onMount(() => {
-    draw(target, data);
+    map = new DungeonMap(target, data);
+    map.draw();
   });
 </script>
 
@@ -1658,6 +1660,7 @@
 
 <h2>Chart</h2>
 
+<!-- <button class="dothings" on:click={clickHandler}>Do things</button> -->
 <div bind:this={target} class="chart" />
 
 <style>
