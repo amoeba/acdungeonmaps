@@ -12,6 +12,7 @@ const margin = {
 
 const color = "rgba(0, 0, 225, 0.1)";
 const tileSize = 10;
+const layerOffset = 10 * tileSize;
 
 interface ChartOptions {
   mode?: ChartMode
@@ -73,6 +74,7 @@ export class DungeonMap {
       g.attr("transform", e.transform)
     });
 
+
     const svg = target
       .append("svg")
       .attr("width", width)
@@ -81,22 +83,25 @@ export class DungeonMap {
     const g = svg.append("g");
 
     // Label
-    g.append("g")
+    const label = g.append("g")
       .append("text")
       .attr("class", "label")
-      .attr("x", 100)
-      .attr("y", 100)
+      .attr("x", 0)
+      .attr("y", 0)
       .text("0x" + this.id + " (" + this.name + ")")
 
     svg.call(zoom)
       .call(zoom.transform, d3.zoomIdentity)
 
+    zoom.scaleTo(svg.transition().duration(0), 0.5);
+    zoom.translateTo(svg.transition().duration(0), width - 50, height - 100);
+
     let offset = 0;
 
     grouped.forEach(data => {
       const layer = g.append("g")
-        .attr("transform", "translate(" + offset + ", " + offset + ")");
-      offset += width / 2;
+        .attr("transform", "translate(" + offset + ", " + 0 + ")");
+      offset += x(layerOffset) - x(0)
 
       // TODO: Simplify this
       if (this.mode === ChartMode.TILE) {
