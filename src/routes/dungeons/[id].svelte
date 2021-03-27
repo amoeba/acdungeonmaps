@@ -12,8 +12,6 @@
     "%27&size=max";
 
   async function getMapData() {
-    console.log("getMapData");
-
     const res = await fetch(url);
     const text = await res.text();
 
