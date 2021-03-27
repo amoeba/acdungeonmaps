@@ -26,6 +26,7 @@ export class DungeonMap {
   el: Element
   data: TileData[]
   mode: ChartMode
+  infoEl: Element
 
   constructor(el: Element, data: TileData[], mode?: ChartMode) {
     this.el = el
@@ -113,6 +114,12 @@ export class DungeonMap {
           .attr("transform", (d: TileData) => this.getTransform(d, x, y))
           .attr("data-rotation", (d: TileData) => d.rotation)
           .attr("onerror", "this.remove()")
+          .on("mouseover", (e, d) => {
+            this.infoEl.innerHTML = this.infoTemplate(e, d);
+          })
+          .on("mouseout", (e, d) => {
+            this.infoEl.innerHTML = "";
+          })
       }
     });
   }
@@ -149,14 +156,27 @@ export class DungeonMap {
   }
 
   drawControls() {
+    // Main control bar
     var controls = document.createElement("div");
     controls.className = "controls";
 
+    // Toggle button
     var toggleButton = document.createElement("button");
     toggleButton.textContent = "Toggle Tiles"
     toggleButton.onclick = (e) => { this.toggle(); }
-
     controls.appendChild(toggleButton);
+
+    // Info bar
+    var infoBar = document.createElement("div");
+    infoBar.className = "info";
+    controls.appendChild(infoBar);
+
+    this.infoEl = infoBar;
+
     this.el.appendChild(controls);
+  }
+
+  infoTemplate(event, data) {
+    return "x: " + data.x + ", y: " + data.y + ", z: " + data.z;
   }
 }
