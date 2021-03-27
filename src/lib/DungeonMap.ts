@@ -42,7 +42,6 @@ export class DungeonMap {
   }
 
   draw(options?: ChartOptions) {
-
     // Compute scales globally
     const x = d3.scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.x))
@@ -65,6 +64,12 @@ export class DungeonMap {
   drawSeparate(x, y) {
     // Group  by z
     const grouped = d3.group(this.data, (d: TileData) => d.z)
+
+    // Create color scale
+    const color = d3.scaleOrdinal((d3.schemeBlues[grouped.size]))
+      .domain(grouped.keys())
+
+    // Start drawing
     const target = d3.select(this.el)
 
     // TODO: Can I make this update instead of just nuking
@@ -101,7 +106,10 @@ export class DungeonMap {
     grouped.forEach(data => {
       const layer = g.append("g")
         .attr("transform", "translate(" + offset + ", " + 0 + ")");
-      offset += x(layerOffset) - x(0)
+
+      // Calculate offset based on the tiles
+      const extent = d3.extent(data, (d: TileData) => d.x);
+      offset += x(extent[1]) - x(extent[0]) + x(layerOffset)
 
       // TODO: Simplify this
       if (this.mode === ChartMode.TILE) {
@@ -113,7 +121,7 @@ export class DungeonMap {
           .attr("y", d => y(d.y))
           .attr("height", d => y(d.y) - y(d.y + tileSize))
           .attr("width", d => x(d.x) - x(d.x - tileSize))
-          .attr("fill", color)
+          .attr("fill", d => color(d.z))
           .attr("stroke", "black")
           .attr("transform", d => this.getTransform(d, x, y))
           .attr("data-rotation", d => d.rotation)
