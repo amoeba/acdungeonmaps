@@ -28,8 +28,6 @@
   }
 </script>
 
-<h2><code>0x{id}</code></h2>
-
 {#await getMapData()}
   ...waiting...
 {:then data}
