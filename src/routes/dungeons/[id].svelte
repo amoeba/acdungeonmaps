@@ -29,7 +29,7 @@
 </script>
 
 {#await getMapData()}
-  ...waiting...
+  <p class="loading">*portal sounds*</p>
 {:then data}
   <DungeonMap {id} name={id} {data} />
 {:catch error}
