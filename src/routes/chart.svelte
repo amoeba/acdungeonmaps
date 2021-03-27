@@ -1646,10 +1646,4 @@
   ];
 </script>
 
-<svelte:head>
-  <title>Chart</title>
-</svelte:head>
-
-<h2>Chart</h2>
-
-<DungeonMap {id} name={id} {data} />
+<DungeonMap id="0xDEADBEEF" name="Example Dungeon" {data} />

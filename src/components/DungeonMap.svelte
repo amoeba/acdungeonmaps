@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
 
   let el: Element;
-  export let id: number;
+  export let id: string;
   export let name: string;
   export let data: TileData[];
 
@@ -31,7 +31,7 @@
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
-    width: 592px;
+    width: 292px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -52,7 +52,7 @@
   }
 
   :global(.label) {
-    font-size: 300%;
+    font-size: 200%;
     font-weight: bold;
   }
 </style>
