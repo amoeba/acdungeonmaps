@@ -22,11 +22,12 @@
   :global(svg) {
     border: 1px solid black;
     border-radius: 0 0 0.25em 0.25em;
+    width: 100%;
   }
 
   :global(.controls) {
     padding: 0.25em;
-    background-color: #aae;
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 0.25em 0.25em 0 0;
     border-top: 1px solid black;
     border-right: 1px solid black;
@@ -38,10 +39,10 @@
   }
 
   :global(.controls button) {
-    background-color: #cc6;
+    background-color: #ccc;
     color: black;
     border-radius: 0.25em;
-    border: 1px solid #888;
+    border: 1px solid black;
     font-size: 75%;
     cursor: pointer;
     padding: 0.25em 0.5em;
@@ -49,6 +50,7 @@
 
   :global(.controls .info) {
     font-size: 75%;
+    font-family: monospace;
   }
 
   :global(.label) {
