@@ -4,12 +4,14 @@
   import { onMount } from "svelte";
 
   let el: Element;
+  export let id: number;
+  export let name: string;
   export let data: TileData[];
 
   let map;
 
   onMount(async () => {
-    map = new DungeonMap(el, data);
+    map = new DungeonMap(el, id, name, data);
     map.draw();
   });
 </script>
@@ -47,5 +49,10 @@
 
   :global(.controls .info) {
     font-size: 75%;
+  }
+
+  :global(.label) {
+    font-size: 300%;
+    font-weight: bold;
   }
 </style>

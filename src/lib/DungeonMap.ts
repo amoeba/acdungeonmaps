@@ -24,12 +24,16 @@ enum ChartMode {
 
 export class DungeonMap {
   el: Element
+  id: number
+  name: string
   data: TileData[]
   mode: ChartMode
   infoEl: Element
 
-  constructor(el: Element, data: TileData[], mode?: ChartMode) {
+  constructor(el: Element, id: number, name: string, data: TileData[], mode?: ChartMode) {
     this.el = el
+    this.id = id
+    this.name = name
     this.data = data
     this.mode = mode || ChartMode.IMAGE
 
@@ -75,6 +79,14 @@ export class DungeonMap {
       .attr("height", height)
 
     const g = svg.append("g");
+
+    // Label
+    g.append("g")
+      .append("text")
+      .attr("class", "label")
+      .attr("x", 100)
+      .attr("y", 100)
+      .text("0x" + this.id + " (" + this.name + ")")
 
     svg.call(zoom)
       .call(zoom.transform, d3.zoomIdentity)
