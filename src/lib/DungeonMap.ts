@@ -100,6 +100,12 @@ export class DungeonMap {
           .attr("stroke", "black")
           .attr("transform", d => this.getTransform(d, x, y))
           .attr("data-rotation", d => d.rotation)
+          .on("mouseover", (e, d) => {
+            this.infoEl.innerHTML = this.infoTemplate(e, d);
+          })
+          .on("mouseout", (e, d) => {
+            this.infoEl.innerHTML = "";
+          })
       } else if (this.mode === ChartMode.IMAGE) {
         layer
           .selectAll("image")
