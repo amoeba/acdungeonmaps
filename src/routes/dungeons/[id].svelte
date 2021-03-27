@@ -35,7 +35,7 @@
 {#await getMapData()}
   ...waiting...
 {:then data}
-  <DungeonMap {data} />
+  <DungeonMap {id} name={id} {data} />
 {:catch error}
   ERROR
 {/await}

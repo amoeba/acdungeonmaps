@@ -1,6 +1,7 @@
 <script type="ts">
   import DungeonMap from "../components/DungeonMap.svelte";
 
+  const id = 0x000;
   const data = [
     {
       landblock_id: "0007",
@@ -1651,4 +1652,4 @@
 
 <h2>Chart</h2>
 
-<DungeonMap {data} />
+<DungeonMap {id} name={id} {data} />
