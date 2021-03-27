@@ -170,7 +170,6 @@ export class DungeonMap {
     var infoBar = document.createElement("div");
     infoBar.className = "info";
     controls.appendChild(infoBar);
-
     this.infoEl = infoBar;
 
     this.el.appendChild(controls);
