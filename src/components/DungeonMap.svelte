@@ -6,10 +6,10 @@
   let el: Element;
   export let data: TileData[];
 
-  console.log("data is");
+  let map;
 
   onMount(async () => {
-    let map = new DungeonMap(el, data);
+    map = new DungeonMap(el, data);
     map.draw();
   });
 </script>
@@ -17,14 +17,28 @@
 <div bind:this={el} class="chart" />
 
 <style>
-  .chart {
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 300px;
-  }
-
   :global(svg) {
     border: 1px solid black;
-    border-radius: 1px;
+    border-radius: 0 0 0.25em 0.25em;
+  }
+
+  :global(.controls) {
+    padding: 0.25em 0.5em;
+    background-color: #aae;
+    border-radius: 0.25em 0.25em 0 0;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    width: 584px;
+  }
+
+  :global(.controls button) {
+    background-color: #cc6;
+    color: black;
+    border-radius: 0.25em;
+    border: 1px solid #888;
+    font-size: 75%;
+    cursor: pointer;
+    padding: 0.25em 0.5em;
   }
 </style>
