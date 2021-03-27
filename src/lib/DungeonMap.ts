@@ -1,13 +1,13 @@
 import * as d3 from 'd3';
 import type { TileData } from "../types/types"
 
-const width = 600;
-const height = 600;
+const width = 300;
+const height = 300;
 const margin = {
-  top: 50,
-  right: 50,
-  bottom: 50,
-  left: 50
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0
 }
 
 const color = "rgba(0, 0, 225, 0.1)";
@@ -25,13 +25,13 @@ enum ChartMode {
 
 export class DungeonMap {
   el: Element
-  id: number
+  id: string
   name: string
   data: TileData[]
   mode: ChartMode
   infoEl: Element
 
-  constructor(el: Element, id: number, name: string, data: TileData[], mode?: ChartMode) {
+  constructor(el: Element, id: string, name: string, data: TileData[], mode?: ChartMode) {
     this.el = el
     this.id = id
     this.name = name
@@ -94,7 +94,7 @@ export class DungeonMap {
       .call(zoom.transform, d3.zoomIdentity)
 
     zoom.scaleTo(svg.transition().duration(0), 0.5);
-    zoom.translateTo(svg.transition().duration(0), width - 50, height - 100);
+    zoom.translateTo(svg.transition().duration(0), width - 15, height - 35);
 
     let offset = 0;
 
