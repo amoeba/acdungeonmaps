@@ -10,7 +10,7 @@ const margin = {
   left: 50
 }
 
-const color = "rgba(0, 0, 0, 0.1)";
+const color = "rgba(0, 0, 225, 0.1)";
 const tileSize = 10;
 
 interface ChartOptions {
@@ -31,9 +31,12 @@ export class DungeonMap {
     this.el = el
     this.data = data
     this.mode = mode || ChartMode.IMAGE
+
+    this.drawControls();
   }
 
   draw(options?: ChartOptions) {
+
     // Compute scales globally
     const x = d3.scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.x))
@@ -58,6 +61,7 @@ export class DungeonMap {
     const grouped = d3.group(this.data, (d: TileData) => d.z)
     const target = d3.select(this.el)
 
+    // TODO: Can I make this update instead of just nuking
     target.select("svg").remove();
 
     const zoom = d3.zoom().on("zoom", e => {
@@ -78,7 +82,6 @@ export class DungeonMap {
 
     grouped.forEach(data => {
       const layer = g.append("g")
-        .attr("stroke", "red")
         .attr("transform", "translate(" + offset + ", " + offset + ")");
       offset += width / 2;
 
@@ -93,6 +96,7 @@ export class DungeonMap {
           .attr("height", d => y(d.y) - y(d.y + tileSize))
           .attr("width", d => x(d.x) - x(d.x - tileSize))
           .attr("fill", color)
+          .attr("stroke", "black")
           .attr("transform", d => this.getTransform(d, x, y))
           .attr("data-rotation", d => d.rotation)
       } else if (this.mode === ChartMode.IMAGE) {
@@ -142,5 +146,17 @@ export class DungeonMap {
     }
 
     return "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
+  }
+
+  drawControls() {
+    var controls = document.createElement("div");
+    controls.className = "controls";
+
+    var toggleButton = document.createElement("button");
+    toggleButton.textContent = "Toggle Tiles"
+    toggleButton.onclick = (e) => { this.toggle(); }
+
+    controls.appendChild(toggleButton);
+    this.el.appendChild(controls);
   }
 }
