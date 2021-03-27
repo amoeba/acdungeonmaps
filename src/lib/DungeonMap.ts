@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import type { TileData } from "../types/types"
 
-const width = 1000;
-const height = 1000;
+const width = 600;
+const height = 600;
 const margin = {
   top: 50,
   right: 50,
@@ -56,27 +56,35 @@ export class DungeonMap {
   drawSeparate(x, y) {
     // Group  by z
     const grouped = d3.group(this.data, (d: TileData) => d.z)
-
     const target = d3.select(this.el)
 
     target.select("svg").remove();
+
+    const zoom = d3.zoom().on("zoom", e => {
+      g.attr("transform", e.transform)
+    });
 
     const svg = target
       .append("svg")
       .attr("width", width)
       .attr("height", height)
 
+    const g = svg.append("g");
+
+    svg.call(zoom)
+      .call(zoom.transform, d3.zoomIdentity)
+
     let offset = 0;
 
     grouped.forEach(data => {
-      const g = svg.append("g")
+      const layer = g.append("g")
+        .attr("stroke", "red")
         .attr("transform", "translate(" + offset + ", " + offset + ")");
-      // offset += 100;
+      offset += width / 2;
 
       // TODO: Simplify this
       if (this.mode === ChartMode.TILE) {
-        g
-          .append("g")
+        layer
           .selectAll("rect")
           .data(data)
           .join("rect")
@@ -88,8 +96,7 @@ export class DungeonMap {
           .attr("transform", d => this.getTransform(d, x, y))
           .attr("data-rotation", d => d.rotation)
       } else if (this.mode === ChartMode.IMAGE) {
-        g
-          .append("g")
+        layer
           .selectAll("image")
           .data(data)
           .join("image")
