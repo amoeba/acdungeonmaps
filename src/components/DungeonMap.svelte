@@ -29,7 +29,7 @@
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
-    width: 584px;
+    width: 592px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
