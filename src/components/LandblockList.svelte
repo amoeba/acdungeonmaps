@@ -18,7 +18,7 @@
     <ul>
       {#each data.rows as row}
         <li>
-          <a href="/dungeons/{row[0]}"><code>{row[1]}</code></a>
+          <a href="/dungeons/{row[0]}">{row[1]} (0x{row[0]})</a>
         </li>
       {/each}
     </ul>
@@ -29,19 +29,14 @@
 
 <style>
   ul {
-    min-height: 300px;
-  }
-
-  ul {
-    display: flex;
-    flex-wrap: wrap;
     list-style-type: none;
     margin: 0;
     padding: 0;
   }
 
   li {
-    display: inline-block;
-    padding: 0 0.5em 0.5em 0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5em;
   }
 </style>
