@@ -23,13 +23,16 @@
   }
 
   :global(.controls) {
-    padding: 0.25em 0.5em;
+    padding: 0.25em;
     background-color: #aae;
     border-radius: 0.25em 0.25em 0 0;
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
     width: 584px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   :global(.controls button) {
@@ -40,5 +43,9 @@
     font-size: 75%;
     cursor: pointer;
     padding: 0.25em 0.5em;
+  }
+
+  :global(.controls .info) {
+    font-size: 75%;
   }
 </style>
