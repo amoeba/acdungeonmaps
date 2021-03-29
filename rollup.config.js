@@ -74,7 +74,7 @@ export default {
 			})
 		],
 
-		preserveEntrySignatures: false,
+		preserveEntrySignatures: 'strict',
 		onwarn,
 	},
 
