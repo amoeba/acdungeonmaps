@@ -75,7 +75,6 @@ export class DungeonMap {
       g.attr("transform", e.transform)
     });
 
-
     const svg = target
       .append("svg")
       .attr("width", width)
