@@ -10,17 +10,26 @@ const margin = {
   left: 0
 }
 
-const color = "rgba(0, 0, 225, 0.1)";
 const tileSize = 10;
 const layerOffset = 10 * tileSize;
-
-interface ChartOptions {
-  mode?: ChartMode
-}
 
 enum ChartMode {
   TILE = "tile",
   IMAGE = "image"
+}
+
+const tileConfig = {
+  [ChartMode.IMAGE]: {
+    selector: "image",
+    element: "image",
+    "xlink:href": (d: TileData) => "/tiles/" + d.environment_id + ".bmp",
+    "onerror": "this.remove()"
+  },
+
+  [ChartMode.TILE]: {
+    selector: "rect",
+    element: "rect"
+  }
 }
 
 export class DungeonMap {
@@ -30,6 +39,9 @@ export class DungeonMap {
   data: TileData[]
   mode: ChartMode
   infoEl: Element
+  scaleX: any // TODO: Type
+  scaleY: any // TODO: Type
+  offset: number
 
   constructor(el: Element, id: string, name: string, data: TileData[], mode?: ChartMode) {
     this.el = el
@@ -37,31 +49,32 @@ export class DungeonMap {
     this.name = name
     this.data = data
     this.mode = mode || ChartMode.IMAGE
+    this.offset = 0
 
     this.drawControls();
   }
 
-  draw(options?: ChartOptions) {
+  draw() {
     // Compute scales globally
-    const x = d3.scaleLinear()
+    this.scaleX = d3.scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.x))
       .range([margin.left, width - margin.right]);
 
-    const y = d3.scaleLinear()
+    this.scaleY = d3.scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.y))
       .range([height - margin.bottom, margin.top]);
 
     // Square up x and y domains
-    if (x.domain()[1] < Math.abs(y.domain()[0])) {
-      x.domain([d3.min(this.data, (d: TileData) => d.x), Math.abs(y.domain()[0])])
-    } else if (x.domain()[1] > Math.abs(y.domain()[0])) {
-      y.domain([-x.domain()[1], d3.max(this.data, (d: TileData) => d.y)])
+    if (this.scaleX.domain()[1] < Math.abs(this.scaleY.domain()[0])) {
+      this.scaleX.domain([d3.min(this.data, (d: TileData) => d.x), Math.abs(this.scaleY.domain()[0])])
+    } else if (this.scaleX.domain()[1] > Math.abs(this.scaleY.domain()[0])) {
+      this.scaleY.domain([-this.scaleX.domain()[1], d3.max(this.data, (d: TileData) => d.y)])
     }
 
-    this.drawSeparate(x, y);
+    this.drawSeparate();
   }
 
-  drawSeparate(x, y) {
+  drawSeparate() {
     // Group  by z
     const grouped = d3.group(this.data, (d: TileData) => d.z)
 
@@ -97,60 +110,51 @@ export class DungeonMap {
     zoom.scaleTo(svg.transition().duration(0), 0.5);
     zoom.translateTo(svg.transition().duration(0), width - 15, height - 35);
 
-    // For now, offset each layer so they don't render on top of each other
-    let offset = 0;
-
     grouped.forEach(data => {
-      // Add each layer to it's own group and offset it
-      const layer = g.append("g")
-        .attr("transform", "translate(" + offset + ", " + 0 + ")");
+      this.drawLayer(g, data)
+    })
+  }
 
-      // Calculate offset based on the tiles
-      const extent = d3.extent(data, (d: TileData) => d.x);
-      offset += x(extent[1]) - x(extent[0]) + x(layerOffset)
+  drawLayer(g: d3.Selection<SVGGElement, unknown, null, undefined>, data: TileData[]) {
+    // Add each layer to it's own group and offset it
+    const layer = g.append("g")
+      .attr("transform", "translate(" + this.offset + ", " + 0 + ")");
 
-      // Plot the actual tiles
-      // TODO: Simplify this
-      if (this.mode === ChartMode.TILE) {
-        layer
-          .selectAll("rect")
-          .data(data)
-          .join("rect")
-          .attr("x", d => x(d.x))
-          .attr("y", d => y(d.y))
-          .attr("height", d => y(d.y) - y(d.y + tileSize))
-          .attr("width", d => x(d.x) - x(d.x - tileSize))
-          .attr("stroke", "black")
-          .attr("fill", "rgba(200, 200, 200, 0.75)")
-          .attr("transform", d => this.getTransform(d, x, y))
-          .attr("data-rotation", d => d.rotation)
-          .on("mouseover", (e, d) => {
-            this.infoEl.innerHTML = this.infoTemplate(e, d);
-          })
-          .on("mouseout", (e, d) => {
-            this.infoEl.innerHTML = "";
-          })
-      } else if (this.mode === ChartMode.IMAGE) {
-        layer
-          .selectAll("image")
-          .data(data)
-          .join("image")
-          .attr("x", (d: TileData) => x(d.x))
-          .attr("y", (d: TileData) => y(d.y))
-          .attr("height", (d: TileData) => y(d.y) - y(d.y + tileSize))
-          .attr("width", (d: TileData) => x(d.x) - x(d.x - tileSize))
-          .attr("xlink:href", (d: TileData) => "/tiles/" + d.environment_id + ".bmp")
-          .attr("transform", (d: TileData) => this.getTransform(d, x, y))
-          .attr("data-rotation", (d: TileData) => d.rotation)
-          .attr("onerror", "this.remove()")
-          .on("mouseover", (e, d) => {
-            this.infoEl.innerHTML = this.infoTemplate(e, d);
-          })
-          .on("mouseout", (e, d) => {
-            this.infoEl.innerHTML = "";
-          })
-      }
-    });
+    // Calculate offset based on the tiles
+    const extent = d3.extent(data, (d: TileData) => d.x);
+    this.offset += this.scaleX(extent[1]) - this.scaleX(extent[0]) + this.scaleX(layerOffset)
+
+    // Grab the config for this tile mode
+    const config = tileConfig[this.mode]
+
+    // Render with common properties
+    let final = layer
+      .selectAll(config.selector)
+      .data(data)
+      .join(config.element)
+      .attr("x", d => this.scaleX(d.x))
+      .attr("y", d => this.scaleY(d.y))
+      .attr("height", d => this.scaleY(d.y) - this.scaleY(d.y + tileSize))
+      .attr("width", d => this.scaleX(d.x) - this.scaleX(d.x - tileSize))
+      .attr("stroke", "black")
+      .attr("fill", "rgba(200, 200, 200, 0.75)")
+      .attr("transform", d => this.getTransform(d, this.scaleX, this.scaleY))
+      .attr("data-rotation", d => d.rotation)
+      .on("mouseover", (e, d) => {
+        this.infoEl.innerHTML = this.infoTemplate(e, d);
+      })
+      .on("mouseout", (e, d) => {
+        this.infoEl.innerHTML = "";
+      })
+
+    // Add in specialized properties
+    if (config["xlink:href"]) {
+      final.attr("xlink:href", (d: TileData) => "/tiles/" + d.environment_id + ".bmp")
+    }
+
+    if (config["onerror"]) {
+      final.attr("onerror", "this.remove()")
+    }
   }
 
   toggle() {
@@ -160,6 +164,7 @@ export class DungeonMap {
       this.mode = ChartMode.TILE
     }
 
+    this.offset = 0
     this.draw()
   }
 
