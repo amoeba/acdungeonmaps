@@ -71,10 +71,6 @@ export class DungeonMap {
     // TODO: Can I make this update instead of just nuking
     target.select("svg").remove();
 
-    const zoom = d3.zoom().on("zoom", e => {
-      g.attr("transform", e.transform)
-    });
-
     const svg = target
       .append("svg")
       .attr("width", width)
@@ -90,15 +86,22 @@ export class DungeonMap {
       .attr("y", 0)
       .text("0x" + this.id + " (" + this.name + ")")
 
+    // Zoom + pan behavior
+    const zoom = d3.zoom().on("zoom", e => {
+      g.attr("transform", e.transform)
+    });
+
     svg.call(zoom)
       .call(zoom.transform, d3.zoomIdentity)
 
     zoom.scaleTo(svg.transition().duration(0), 0.5);
     zoom.translateTo(svg.transition().duration(0), width - 15, height - 35);
 
+    // For now, offset each layer so they don't render on top of each other
     let offset = 0;
 
     grouped.forEach(data => {
+      // Add each layer to it's own group and offset it
       const layer = g.append("g")
         .attr("transform", "translate(" + offset + ", " + 0 + ")");
 
@@ -106,6 +109,7 @@ export class DungeonMap {
       const extent = d3.extent(data, (d: TileData) => d.x);
       offset += x(extent[1]) - x(extent[0]) + x(layerOffset)
 
+      // Plot the actual tiles
       // TODO: Simplify this
       if (this.mode === ChartMode.TILE) {
         layer
