@@ -65,10 +65,6 @@ export class DungeonMap {
     // Group  by z
     const grouped = d3.group(this.data, (d: TileData) => d.z)
 
-    // Create color scale
-    const color = d3.scaleOrdinal((d3.schemeBlues[grouped.size]))
-      .domain(grouped.keys())
-
     // Start drawing
     const target = d3.select(this.el)
 
@@ -121,8 +117,8 @@ export class DungeonMap {
           .attr("y", d => y(d.y))
           .attr("height", d => y(d.y) - y(d.y + tileSize))
           .attr("width", d => x(d.x) - x(d.x - tileSize))
-          .attr("fill", d => color(d.z))
           .attr("stroke", "black")
+          .attr("fill", "rgba(200, 200, 200, 0.75)")
           .attr("transform", d => this.getTransform(d, x, y))
           .attr("data-rotation", d => d.rotation)
           .on("mouseover", (e, d) => {
@@ -141,7 +137,6 @@ export class DungeonMap {
           .attr("height", (d: TileData) => y(d.y) - y(d.y + tileSize))
           .attr("width", (d: TileData) => x(d.x) - x(d.x - tileSize))
           .attr("xlink:href", (d: TileData) => "/tiles/" + d.environment_id + ".bmp")
-          .attr("fill", color)
           .attr("transform", (d: TileData) => this.getTransform(d, x, y))
           .attr("data-rotation", (d: TileData) => d.rotation)
           .attr("onerror", "this.remove()")
