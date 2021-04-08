@@ -84,7 +84,7 @@ export class DungeonMap {
     const g = svg.append("g");
 
     // Label
-    const label = g.append("g")
+    g.append("g")
       .append("text")
       .attr("class", "label")
       .attr("x", 0)
