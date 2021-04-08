@@ -75,7 +75,7 @@ export class DungeonMap {
   }
 
   drawSeparate() {
-    // Group  by z
+    // Group by z
     const grouped = d3.group(this.data, (d: TileData) => d.z)
 
     // Start drawing
