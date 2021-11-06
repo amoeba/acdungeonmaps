@@ -32,7 +32,7 @@ const tileConfig = {
   }
 }
 
-export class DungeonMap {
+export class DungeonMapViz {
   el: Element
   id: string
   name: string
@@ -128,7 +128,7 @@ export class DungeonMap {
     const config = tileConfig[this.mode]
 
     // Render with common properties
-    let final = layer
+    const final = layer
       .selectAll(config.selector)
       .data(data)
       .join(config.element)
@@ -157,7 +157,7 @@ export class DungeonMap {
     }
   }
 
-  toggle() {
+  toggle() : void {
     if (this.mode === ChartMode.TILE) {
       this.mode = ChartMode.IMAGE
     } else {
@@ -168,7 +168,7 @@ export class DungeonMap {
     this.draw()
   }
 
-  getTransform(d, x, y) {
+  getTransform(d, x, y) : string {
     let out = 0;
     const offset = x(tileSize) - x(tileSize / 2);
 
@@ -189,19 +189,19 @@ export class DungeonMap {
     return "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
   }
 
-  drawControls() {
+  drawControls() : void {
     // Main control bar
-    var controls = document.createElement("div");
+    const controls = document.createElement("div");
     controls.className = "controls";
 
     // Toggle button
-    var toggleButton = document.createElement("button");
+    const toggleButton = document.createElement("button");
     toggleButton.textContent = "Toggle Tiles"
     toggleButton.onclick = (e) => { this.toggle(); }
     controls.appendChild(toggleButton);
 
     // Info bar
-    var infoBar = document.createElement("div");
+    const infoBar = document.createElement("div");
     infoBar.className = "info";
     controls.appendChild(infoBar);
     this.infoEl = infoBar;
@@ -209,7 +209,7 @@ export class DungeonMap {
     this.el.appendChild(controls);
   }
 
-  infoTemplate(event, data) {
+  infoTemplate(event, data) : string {
     return "x: " + data.x + ", y: " + data.y + ", z: " + data.z;
   }
 }

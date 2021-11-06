@@ -1,9 +1,9 @@
-.DS_Store
-/node_modules/
-/src/node_modules/@sapper/
-yarn-error.log
-/__sapper__/
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+etc
+etc
+etc
 .vercel
-etc/CellProcessor/bin
-etc/CellProcessor/.vs
-etc/CellProcessor/obj

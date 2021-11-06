@@ -1,6 +1,4 @@
 <script lang="ts">
-  import fetch from "isomorphic-unfetch";
-
   const fetchLandblocks = (async () => {
     const url =
       "https://dungeonmapsdb.vercel.app/dungeonmaps.json?sql=select%20*%20from%20dungeons%20limit%201000;";

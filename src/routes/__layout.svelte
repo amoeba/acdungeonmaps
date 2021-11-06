@@ -1,17 +1,13 @@
 <script lang="ts">
-  import Nav from "../components/Nav.svelte";
-
-  export let segment: string;
+  import Nav from "../components/Nav.svelte"
 </script>
 
 <header>
   <h1><a href="/">Dungeon Maps</a></h1>
-  <Nav {segment} />
+  <Nav />
 </header>
 
-<main>
-  <slot />
-</main>
+<slot></slot>
 
 <footer>
   Code used to generated this site is based on code from <a

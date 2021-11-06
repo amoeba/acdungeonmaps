@@ -1,21 +1,43 @@
 <script lang="ts">
-  import { DungeonMap } from "../lib/DungeonMap";
-  import type { TileData } from "../types/types";
   import { onMount } from "svelte";
+  import * as d3 from "d3";
+  import { DungeonMapViz } from "../lib/DungeonMapViz"
 
-  let el: Element;
-  export let id: string;
-  export let name: string;
-  export let data: TileData[];
+  export let id : string;
+  export let loading = true;
 
-  let map;
+  let el : Element;
+  let map : any;
 
-  onMount(async () => {
-    map = new DungeonMap(el, id, name, data);
+  const url = `https://dungeonmapsdb.vercel.app/dungeonmaps.csv?sql=select%20*%20from%20tiles%20where%20landblock_id%20=%20%27${id}%27&size=max`;
+
+  onMount(async() => {
+    const res = await fetch(url);
+    const text = await res.text();
+
+    const data = d3.csvParse(text, (d) => {
+      return {
+        landblock_id: d.landblock_id,
+        x: Number(d.x),
+        y: Number(d.y),
+        z: Number(d.z),
+        rotation: Number(d.rotation),
+        environment_id: Number(d.environment_id),
+      };
+    });
+
+    map = new DungeonMapViz(el, id, id, data);
     map.draw();
-  });
+
+    loading = false;
+  })
 </script>
 
+<h2>0x{id}</h2>
+
+{#if loading}
+<p class="loading">*portal sounds*</p>
+{/if}
 <div bind:this={el} class="chart" />
 
 <style>
