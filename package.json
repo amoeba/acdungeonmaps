@@ -14,6 +14,7 @@
     "publishdb": "datasette publish vercel data/dungeonmaps.sqlite --project dungeonmapsdb"
   },
   "devDependencies": {
+    "@sveltejs/adapter-vercel": "^1.0.0-next.31",
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
