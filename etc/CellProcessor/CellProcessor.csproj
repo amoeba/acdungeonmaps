@@ -1,25 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ACE\Source\ACE.DatLoader\ACE.DatLoader.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.12" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ACE.Common">
-      <HintPath>..\ACE\Source\ACE.DatLoader\bin\Debug\netstandard2.0\ACE.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ACE.DatLoader">
-      <HintPath>..\ACE\Source\ACE.DatLoader\bin\Debug\netstandard2.0\ACE.DatLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="ACE.Entity">
-      <HintPath>..\ACE\Source\ACE.DatLoader\bin\Debug\netstandard2.0\ACE.Entity.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
 </Project>
