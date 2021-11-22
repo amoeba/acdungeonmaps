@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
   import { DungeonMapViz } from "../lib/DungeonMapViz"
+  import {TILE_URL }from "../lib/db"
 
   export let id : string;
   export let loading = true;
@@ -9,10 +10,8 @@
   let el : Element;
   let map : any;
 
-  const url = `https://dungeonmapsdb.vercel.app/dungeonmaps.csv?sql=select%20*%20from%20tiles%20where%20landblock_id%20=%20%27${id}%27&size=max`;
-
   onMount(async() => {
-    const res = await fetch(url);
+    const res = await fetch(TILE_URL(id));
     const text = await res.text();
 
     const data = d3.csvParse(text, (d) => {
