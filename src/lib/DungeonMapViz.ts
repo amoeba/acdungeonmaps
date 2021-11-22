@@ -157,7 +157,7 @@ export class DungeonMapViz {
     }
   }
 
-  toggle() : void {
+  toggle(): void {
     if (this.mode === ChartMode.TILE) {
       this.mode = ChartMode.IMAGE
     } else {
@@ -168,7 +168,7 @@ export class DungeonMapViz {
     this.draw()
   }
 
-  getTransform(d, x, y) : string {
+  getTransform(d, x, y): string {
     let out = 0;
     const offset = x(tileSize) - x(tileSize / 2);
 
@@ -189,7 +189,7 @@ export class DungeonMapViz {
     return "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
   }
 
-  drawControls() : void {
+  drawControls(): void {
     // Main control bar
     const controls = document.createElement("div");
     controls.className = "controls";
