@@ -1,9 +1,8 @@
 <script lang="ts">
-  const fetchLandblocks = (async () => {
-    const url =
-      "https://dungeonmapsdb.vercel.app/dungeonmaps.json?sql=select%20*%20from%20dungeons%20limit%201000;";
+  import { LANDBLOCKS_URL } from "../lib/db";
 
-    const response = await fetch(url);
+  const fetchLandblocks = (async () => {
+    const response = await fetch(LANDBLOCKS_URL);
 
     return await response.json();
   })();
