@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Nav from "../components/Nav.svelte"
+  import Nav from "../components/Nav.svelte";
 </script>
 
 <header>
@@ -7,7 +7,7 @@
   <Nav />
 </header>
 
-<slot></slot>
+<slot />
 
 <footer>
   Code used to generated this site is based on code from <a

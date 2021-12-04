@@ -1,18 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import * as d3 from "d3";
-  import { DungeonMapViz } from "../lib/DungeonMapViz"
-  import {TILE_URL }from "../lib/db"
+  import { DungeonMapViz } from "../lib/DungeonMapViz";
+  import { TILE_URL } from "../lib/db";
 
-  export let id : string;
-  export let name : string;
+  export let id: string;
+  export let name: string;
   export let loading = true;
-  export let error = ""
+  export let error = "";
 
-  let el : Element;
-  let map : any;
+  let el: Element;
+  let map: any;
 
-  onMount(async() => {
+  onMount(async () => {
     const res = await fetch(TILE_URL(id));
     const text = await res.text();
 
@@ -26,7 +26,7 @@
         rotation: Number(d.rotation),
         environment_id: Number(d.environment_id),
         candidate: d.candidate,
-        name: d.name
+        name: d.name,
       };
     });
 
@@ -41,15 +41,14 @@
     map.draw();
 
     loading = false;
-  })
+  });
 </script>
 
-
 {#if loading}
-<p class="loading">*portal sounds*</p>
+  <p class="loading">*portal sounds*</p>
 {/if}
 {#if error}
-<p class="error">{error}</p>
+  <p class="error">{error}</p>
 {/if}
 {#if !loading}
   <h2>{name} (<code>0x{id}</code>)</h2>

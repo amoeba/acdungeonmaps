@@ -209,7 +209,7 @@ export class DungeonMapViz {
     this.el.appendChild(controls);
   }
 
-  infoTemplate(event, data) : string {
+  infoTemplate(event, data): string {
     return "x: " + data.x + ", y: " + data.y + ", z: " + data.z;
   }
 }
