@@ -7,40 +7,49 @@
   export let id: string;
   export let name: string;
   export let loading = true;
-  export let error = "";
+  export let error = null;
 
   let el: Element;
   let map: any;
 
   onMount(async () => {
-    const res = await fetch(TILE_URL(id));
-    const text = await res.text();
+    fetch(TILE_URL(id))
+      .then((res) => {
+        return res.text();
+      })
+      .then((text) => {
+        const data = d3.csvParse(text, (d) => {
+          return {
+            landblock_id: d.landblock_id,
+            cell_id: d.cell_id,
+            x: Number(d.x),
+            y: Number(d.y),
+            z: Number(d.z),
+            rotation: Number(d.rotation),
+            environment_id: Number(d.environment_id),
+            candidate: d.candidate,
+            name: d.name,
+          };
+        });
 
-    const data = d3.csvParse(text, (d) => {
-      return {
-        landblock_id: d.landblock_id,
-        cell_id: d.cell_id,
-        x: Number(d.x),
-        y: Number(d.y),
-        z: Number(d.z),
-        rotation: Number(d.rotation),
-        environment_id: Number(d.environment_id),
-        candidate: d.candidate,
-        name: d.name,
-      };
-    });
+        if (data.length <= 0) {
+          error = `Tiles for ${id} not found.`;
+          loading = false;
 
-    if (data.length <= 0) {
-      error = `Tiles for ${id} not found.`;
-      loading = false;
-      return;
-    }
+          return;
+        }
 
-    name = data[0].name;
-    map = new DungeonMapViz(el, id, id, data);
-    map.draw();
+        name = data[0].name;
+        map = new DungeonMapViz(el, id, id, data);
+        map.draw();
 
-    loading = false;
+        loading = false;
+      })
+      .catch((e) => {
+        console.log("error?");
+        loading = false;
+        error = `Error fetching tiles: ${e}`;
+      });
   });
 </script>
 
@@ -50,7 +59,7 @@
 {#if error}
   <p class="error">{error}</p>
 {/if}
-{#if !loading}
+{#if !loading && !error}
   <h2>{name} (<code>0x{id}</code>)</h2>
 {/if}
 
