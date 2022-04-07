@@ -2,10 +2,10 @@
   /**
    * @type {import('@sveltejs/kit').Load}
    */
-  export async function load({ page, fetch, session, stuff }) {
+  export async function load({ params, fetch, session, stuff }) {
     return {
       props: {
-        id: page.params.id,
+        id: params.id,
       },
     };
   }

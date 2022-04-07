@@ -5,7 +5,7 @@
   import { TILE_URL } from "../lib/db";
 
   export let id: string;
-  export let name: string;
+  export let name: string = null;
   export let loading = true;
   export let error = null;
 
