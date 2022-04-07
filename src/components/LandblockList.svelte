@@ -25,6 +25,10 @@
 </div>
 
 <style>
+  div {
+    margin-bottom: 1em;
+  }
+
   ul {
     list-style-type: none;
     margin: 0;
