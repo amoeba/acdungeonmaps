@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import type { TileData } from "../types/types"
 
-const width = 300;
-const height = 300;
+const width = 600;
+const height = 600;
 const margin = {
   top: 0,
   right: 0,
@@ -11,7 +11,6 @@ const margin = {
 }
 
 const tileSize = 10;
-const layerOffset = 10 * tileSize;
 
 enum ChartMode {
   TILE = "tile",
@@ -91,14 +90,6 @@ export class DungeonMapViz {
 
     const g = svg.append("g");
 
-    // Label
-    g.append("g")
-      .append("text")
-      .attr("class", "label")
-      .attr("x", 0)
-      .attr("y", 0)
-      .text("0x" + this.id + " (" + this.name + ")")
-
     // Zoom + pan behavior
     const zoom = d3.zoom().on("zoom", e => {
       g.attr("transform", e.transform)
@@ -122,7 +113,7 @@ export class DungeonMapViz {
 
     // Calculate offset based on the tiles
     const extent = d3.extent(data, (d: TileData) => d.x);
-    this.offset += this.scaleX(extent[1]) - this.scaleX(extent[0]) + this.scaleX(layerOffset)
+    this.offset += this.scaleX(extent[1]) - this.scaleX(extent[0])
 
     // Grab the config for this tile mode
     const config = tileConfig[this.mode]
