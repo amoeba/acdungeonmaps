@@ -5,7 +5,7 @@
   import { TILE_URL } from "../lib/db";
 
   export let id: string;
-  export let name: string = null;
+  export let name: string = "";
   export let loading = true;
   export let error = null;
 
@@ -53,6 +53,13 @@
   });
 </script>
 
+<svelte:head>
+  {#if loading}
+  <title>Map of 0x{id}</title>
+  {:else}
+  <title>Map of {name} (0x{id})</title>
+  {/if}
+</svelte:head>
 {#if loading}
   <p class="loading">*portal sounds*</p>
 {/if}
@@ -68,31 +75,15 @@
 <style>
   :global(svg) {
     border: 1px solid black;
-    border-radius: 0 0 0.25em 0.25em;
-    width: 100%;
+    border-radius: 4px;
   }
 
   :global(.controls) {
     padding: 0.25em;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 0.25em 0.25em 0 0;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    width: 100%;
+    width: 600px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-
-  :global(.controls button) {
-    background-color: #ccc;
-    color: black;
-    border-radius: 0.25em;
-    border: 1px solid black;
-    font-size: 75%;
-    cursor: pointer;
-    padding: 0.25em 0.5em;
   }
 
   :global(.controls .info) {
