@@ -67,7 +67,37 @@
   <p class="error">{error}</p>
 {/if}
 {#if !loading && !error}
-  <h2>{name} (<code>0x{id}</code>)</h2>
+  <h2><a href="/dungeons/{id}">{name} (<code>0x{id}</code>)</a></h2>
 {/if}
 
-<div bind:this={el} class="chart" />
+Each level of the dungeon is shown as a separate, zoomable graphic.
+
+<div class="layers" bind:this={el} />
+
+<style>
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .layers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 1em 0;
+  }
+
+  :global(.map-container) {
+    display: flex;
+    border: 1px solid #666;
+    border-radius: 0.25em;
+    position: relative;
+  }
+
+  :global(.map-title) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.25em;
+  }
+</style>

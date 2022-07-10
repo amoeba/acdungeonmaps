@@ -37,7 +37,17 @@ export class DungeonMapViz {
       .attr("width", 300)
       .attr("height", 300);
 
-    this.el.appendChild(svg.node());
+    const containerNode = document.createElement("div");
+    containerNode.classList.add("map-container");
+
+    const mapTitle = document.createElement("div");
+    mapTitle.classList.add("map-title");
+    mapTitle.innerHTML = `Z: ${level[0].z}`;
+
+    containerNode.appendChild(mapTitle);
+    containerNode.appendChild(svg.node());
+
+    this.el.appendChild(containerNode)
 
     // Layer for drawing
     const g = svg.append("g");
@@ -98,12 +108,18 @@ export class DungeonMapViz {
     this.scaleY = d3.scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.y))
       .range([height - margin.bottom, margin.top]);
+
+    // Square up x and y domains
+    if (this.scaleX.domain()[1] < Math.abs(this.scaleY.domain()[0])) {
+      this.scaleX.domain([d3.min(this.data, (d: TileData) => d.x), Math.abs(this.scaleY.domain()[0])])
+    } else if (this.scaleX.domain()[1] > Math.abs(this.scaleY.domain()[0])) {
+      this.scaleY.domain([-this.scaleX.domain()[1], d3.max(this.data, (d: TileData) => d.y)])
+    }
   }
 
   draw() {
-    this.computeScales();
-
     const grouped = d3.group(this.data, (d: TileData) => d.z)
+    this.computeScales();
 
     grouped.forEach(g => {
       this.drawLevel(g);
