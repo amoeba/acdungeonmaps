@@ -71,28 +71,3 @@
 {/if}
 
 <div bind:this={el} class="chart" />
-
-<style>
-  :global(svg) {
-    border: 1px solid black;
-    border-radius: 4px;
-  }
-
-  :global(.controls) {
-    padding: 0.25em;
-    width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  :global(.controls .info) {
-    font-size: 75%;
-    font-family: monospace;
-  }
-
-  :global(.label) {
-    font-size: 200%;
-    font-weight: bold;
-  }
-</style>
