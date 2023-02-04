@@ -8,11 +8,16 @@
     MeshBasicMaterial,
     Mesh,
     TextureLoader,
-    Vector2
+    Vector2,
+    WireframeGeometry,
+    LineSegments,
+    LineBasicMaterial
   } from "three";
   import {OrbitControls} from "../lib/OrbitControls"
 
   let el: Element;
+  let showWireframe = true;
+
   const tl  = new TextureLoader();
 
   const getRotation = function(w : number): number {
@@ -41,10 +46,10 @@
       texture.rotation = rot * (Math.PI / 180);
 
       // Material
-      let material = new MeshBasicMaterial({ map: texture });
+      const material = new MeshBasicMaterial({ map: texture });
 
       // Geometry and Mesh
-      let geometry = new BoxGeometry(10, 1, 10);
+      const geometry = new BoxGeometry(10, 1, 10);
       let cube = new Mesh(geometry, material);
 
       cube.position.x = tiles[i][0];
@@ -59,20 +64,41 @@
 
   };
 
+
+  const addDebugCubes = function (scene, tiles) {
+    for (var i = 0; i < tiles.length; i++) {
+      const geometry = new BoxGeometry(10, 10, 10);
+      const wireframe = new WireframeGeometry(geometry);
+      var mat = new LineBasicMaterial( { color: 0x00aa00 } );
+      const line = new LineSegments(wireframe, mat);
+
+      line.position.x = tiles[i][0];
+      line.position.y = tiles[i][2];
+      line.position.z = tiles[i][1];
+
+      scene.add(line);
+    }
+  };
+
   onMount(async () => {
     // Fetch
-    const id = "0012";
+    const id = "011B";
     const url = `https://dungeonmapsdb.treestats.net/dungeonmaps.json?sql=select+x%2C+y%2C+z%2C+rotation%2C+environment_id+%2Cname+from+tiles+left+join+dungeons+on+dungeons.landblock_id+%3D%3D+tiles.landblock_id+where+tiles.landblock_id+%3D+%27${id}%27+%3B&_size=max`;
 		const response = await fetch(url);
     const json = await response.json();
     const tiles = json["rows"];
 
     // Scene
-    const width = 600;
-    const height = 600;
+    const width = 800;
+    const height = 800;
 
     const scene = new Scene();
     const camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
+
+    // Look down
+    camera.position.set(0, 200, 0);
+    camera.up.set(0, 0, -1);
+    camera.lookAt(0, 0, 0);
 
     // Renderer
     const renderer = new WebGLRenderer();
@@ -81,10 +107,10 @@
 
     // Controls
     const controls = new OrbitControls( camera, renderer.domElement );
-    camera.position.set( 0, 100, 0 );
     controls.update();
 
     addTiles(scene, tiles);
+    // addDebugCubes(scene, tiles);
 
 
     function animate() {
@@ -97,10 +123,9 @@
   });
 </script>
 
-<svelte:head><title>ThreeJS Demo</title></svelte:head>
+<svelte:head><title>3D Tiles Demo</title></svelte:head>
 
-<h2>ThreeJS Demo</h2>
+<h2>3D Tiles Demo</h2>
 
-<p>WIP</p>
-
+<!-- <label>Show Cell Wireframes<input type="checkbox" bind:checked={showWireframe} /></label> -->
 <div bind:this={el} class="three" />
