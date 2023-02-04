@@ -110,7 +110,18 @@ namespace CellProcessor
                         surface.AddVertex(v);
                     }
 
-                    Console.WriteLine($"Surface is wall? {surface.IsWall()}");
+                    if (surface.IsWall())
+                    {
+                        Console.WriteLine($"WALL");
+                    }
+                    else if (surface.IsFloor())
+                    {
+                        Console.WriteLine($"FLOOR");
+                    }
+                    else
+                    {
+                        Console.WriteLine("neither");
+                    }
                 }
 
 
