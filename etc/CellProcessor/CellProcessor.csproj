@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\ACE\Source\ACE.DatLoader\ACE.DatLoader.csproj" />
+    <ProjectReference Include="..\..\..\ACE\Source\ACE.Server\ACE.Server.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
