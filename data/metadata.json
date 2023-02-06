@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "datasette-cors": {
+      "hosts": ["http://localhost:3000"]
+    }
+  }
+}

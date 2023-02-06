@@ -13,4 +13,8 @@ export const TILE_URL = function (id: string): string {
   return `${DB_HOST}/${DB_NAME}.csv?sql=${TILES_QUERY(id)}&_size=max`;
 }
 
+export const TILE_URL_JSON = function (id: string): string {
+  return `${DB_HOST}/${DB_NAME}.json?sql=${TILES_QUERY(id)}&_size=max`;
+}
+
 export const LANDBLOCKS_URL = `${DB_HOST}/${DB_NAME}.json?sql=select%20*%20from%20${DUNGEONS_TBL_NAME}%20limit%201000;`

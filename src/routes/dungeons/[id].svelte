@@ -12,7 +12,7 @@
 </script>
 
 <script lang="ts">
-  import DungeonMap from "../../components/DungeonMap.svelte";
+  import TabbedMap from "../../components/TabbedMap.svelte";
 
   export let id;
 </script>
@@ -21,4 +21,4 @@
   <title>{id}</title>
 </svelte:head>
 
-<DungeonMap {id} />
+<TabbedMap id={id} />

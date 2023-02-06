@@ -12,7 +12,7 @@ const margin = {
 
 const tileSize = 10;
 
-export class DungeonMapViz {
+export class ExplodedMapViz {
   el: Element
   id: string
   name: string

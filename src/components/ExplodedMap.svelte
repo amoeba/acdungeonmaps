@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import * as d3 from "d3";
-  import { DungeonMapViz } from "../lib/DungeonMapViz";
+  import { ExplodedMapViz } from "../lib/ExplodedMapViz";
   import { TILE_URL } from "../lib/db";
 
   export let id: string;
@@ -40,7 +40,7 @@
         }
 
         name = data[0].name;
-        map = new DungeonMapViz(el, id, id, data);
+        map = new ExplodedMapViz(el, id, id, data);
         map.draw();
 
         loading = false;
@@ -53,38 +53,13 @@
   });
 </script>
 
-<svelte:head>
-  {#if loading}
-  <title>Map of 0x{id}</title>
-  {:else}
-  <title>Map of {name} (0x{id})</title>
-  {/if}
-</svelte:head>
-{#if loading}
-  <p class="loading">*portal sounds*</p>
-{/if}
-{#if error}
-  <p class="error">{error}</p>
-{/if}
-{#if !loading && !error}
-  <h2><a href="/dungeons/{id}">{name} (<code>0x{id}</code>)</a></h2>
-{/if}
-
-Each level of the dungeon is shown as a separate, zoomable graphic.
-
 <div class="layers" bind:this={el} />
 
 <style>
-  h2 {
-    margin: 0;
-    padding: 0;
-  }
-
   .layers {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-    padding: 1em 0;
   }
 
   :global(.map-container) {
