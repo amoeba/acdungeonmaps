@@ -23,8 +23,8 @@
     }
   }
 
-  let activeTab = tabs["exploded"];
-  let currentComponent = activeTab.component;
+  let activeTab = "exploded";
+  let currentComponent = tabs[activeTab].component;
 
   const onTabClick = (e) => {
     const id = e.target.dataset.tab;
@@ -34,6 +34,7 @@
 
   const switchTab = (id: string) => {
     currentComponent = tabs[id].component;
+    activeTab = id;
   }
 </script>
 
@@ -42,6 +43,7 @@
     {#each Object.keys(tabs) as tab}
     <div
       class="tab"
+      class:selected="{activeTab === tab}"
       on:click={onTabClick}
       data-tab={tab}>
       { tabs[tab].label }
@@ -57,12 +59,12 @@
 <style>
   .tab {
     cursor: pointer;
-    background-color: black;
+    background-color: #ccc;
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-radius: 5px 5px 0 0;
-    color: rgb(240, 240, 240);
+    color: #333;
     padding: 0.25em 0.5em;
   }
 
@@ -76,5 +78,10 @@
     border-radius: 5px;
     border: 1px solid black;
     padding: 1em;
+  }
+
+  .tab.selected {
+    background-color: #555;
+    color: #eee;
   }
 </style>
