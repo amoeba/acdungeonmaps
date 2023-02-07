@@ -139,8 +139,8 @@
             moveRight = true;
             break;
         }
+      };
 
-  };
       const onKeyUp = function (event) {
         switch (event.code) {
           case 'ArrowUp':
@@ -222,7 +222,6 @@
           Render(tiles)
         })
         .catch((e) => {
-          console.log("error", e);
           loading = false;
           error = `Error fetching tiles: ${e}`;
         });
@@ -236,6 +235,10 @@
   <p class="error">{error}</p>
 {/if}
 {#if !loading && !error}
-  <div bind:this={el} class="three" />
+  <span>
+    <strong>Controls:</strong> Click to enter scene and use FPS controls (arrow keys, WASD and mouse) to move
+  </span>
 {/if}
+
+<div bind:this={el} class="three" />
 

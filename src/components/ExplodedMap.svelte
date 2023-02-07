@@ -46,12 +46,25 @@
         loading = false;
       })
       .catch((e) => {
-        console.log("error?");
         loading = false;
         error = `Error fetching tiles: ${e}`;
+
+        throw(e)
       });
   });
 </script>
+
+{#if loading}
+  <p class="loading">*portal sounds*</p>
+{/if}
+{#if error}
+  <p class="error">{error}</p>
+{/if}
+{#if !loading && !error}
+  <span>
+    <strong>Controls:</strong> Use mousewheel to zoom, click and drag to pan
+  </span>
+{/if}
 
 <div class="layers" bind:this={el} />
 
