@@ -1,5 +1,6 @@
 <script lang="ts">
   import ExplodedMap from "./ExplodedMap.svelte";
+  import LayeredMap from "./LayeredMap.svelte";
   import ThreeDeeMap from "./ThreeDeeMap.svelte";
   import B from "./B.svelte";
 
@@ -12,9 +13,9 @@
       label: "Exploded",
       component: ExplodedMap
     },
-    "combined": {
-      label: "Combined",
-      component: B
+    "layered": {
+      label: "Layered",
+      component: LayeredMap
     },
     "3d": {
       label: "3D",
