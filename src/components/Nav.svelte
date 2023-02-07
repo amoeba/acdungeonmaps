@@ -9,6 +9,11 @@
         >Dungeon List</a
       >
     </li>
+    <li>
+      <a href="https://github.com/amoeba/acdungeonmaps"
+        >GitHub</a
+      >
+    </li>
   </ul>
 </nav>
 
@@ -18,6 +23,7 @@
     padding: 0;
     display: flex;
     flex-wrap: wrap;
+    border-bottom: 1px solid #ccc;
   }
 
   li {

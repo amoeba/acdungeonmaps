@@ -2,7 +2,6 @@
   import ExplodedMap from "./ExplodedMap.svelte";
   import LayeredMap from "./LayeredMap.svelte";
   import ThreeDeeMap from "./ThreeDeeMap.svelte";
-  import B from "./B.svelte";
 
   export let id;
 
