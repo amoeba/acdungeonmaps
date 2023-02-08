@@ -1,5 +1,6 @@
 import * as d3 from "d3";
-import type { TileData } from "../types/types";
+
+import type { TileData } from "../types";
 
 const width = 300;
 const height = 300;

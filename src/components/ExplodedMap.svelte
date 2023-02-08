@@ -5,9 +5,9 @@
   import { TILE_URL } from "../lib/db";
 
   export let id: string;
-  export let name: string = "";
+  export let name: string;
   export let loading = true;
-  export let error = null;
+  export let error: string;
 
   let el: Element;
   let map: any;
