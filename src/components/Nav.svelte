@@ -1,12 +1,7 @@
-<script lang="ts">
-  export let segment: string;
-</script>
-
 <nav>
   <ul>
     <li>
-      <a aria-current={segment === undefined ? "page" : undefined} href="/"
-        >Dungeon List</a
+      <a href="/">Dungeon List</a
       >
     </li>
     <li>
