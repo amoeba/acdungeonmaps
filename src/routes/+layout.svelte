@@ -3,7 +3,8 @@
   import Footer from "../components/Footer.svelte";
 
   /** @type {import('./$types').LayoutServerData} */
-  export let data;
+  export let COMMIT_REF;
+  const deploymentURL = `https://github.com/amoeba/acdungeonmaps/commit/${COMMIT_REF}`;
 </script>
 
 <Header />
@@ -11,6 +12,6 @@
   <slot />
 </main>
 <Footer />
-{#if data}
-  <p>This staging environment was deployed from {data.deploymentGitBranch}.</p>
+{#if COMMIT_REF}
+  <code><a href={deploymentURL}>{COMMIT_REF}.</a></code>
 {/if}
