@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { SvelteComponent } from "svelte";
+
   import ExplodedMap from "./ExplodedMap.svelte";
   import LayeredMap from "./LayeredMap.svelte";
   import ThreeDeeMap from "./ThreeDeeMap.svelte";
@@ -7,7 +9,16 @@
 
   let contentEl;
 
-  const tabs = {
+  interface Tab {
+    label: string;
+    component: typeof SvelteComponent;
+  }
+
+  interface Tabs {
+    [key: string]: Tab;
+  }
+
+  const tabs: Tabs = {
     exploded: {
       label: "Exploded",
       component: ExplodedMap,
@@ -26,7 +37,12 @@
   let currentComponent = tabs[activeTab].component;
 
   const onTabClick = (e: Event) => {
-    const id = e.target.dataset.tab;
+    const el = e.target as HTMLElement;
+    const id = el.dataset.tab;
+
+    if (typeof id !== "string") {
+      return;
+    }
 
     switchTab(id);
   };

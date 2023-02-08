@@ -19,18 +19,18 @@
   import { TILE_URL_JSON } from "../lib/db";
 
   // Props
-  export let id;
+  export let id: string;
 
   //
   let name;
 
   //
   let loading = true;
-  let error = null;
+  let error: string;
   //
 
   let el: Element;
-  let controls;
+  let controls: PointerLockControls;
 
   let moveForward = false;
   let moveBackward = false;
@@ -55,7 +55,7 @@
     }
   };
 
-  const addTiles = function (scene, tiles) {
+  const addTiles = function (scene: Scene, tiles: string | any[]) {
     for (var i = 0; i < tiles.length; i++) {
       const w = tiles[i][3];
       // Note: Extra +180 here was needed to get tiles right
@@ -86,7 +86,14 @@
     }
   };
 
-  const addDebugCubes = function (scene, tiles) {
+  const addDebugCubes = function (
+    scene: {
+      add: (
+        arg0: LineSegments<WireframeGeometry<BoxGeometry>, LineBasicMaterial>
+      ) => void;
+    },
+    tiles: string | any[]
+  ) {
     for (var i = 0; i < tiles.length; i++) {
       const geometry = new BoxGeometry(10, 10, 10);
       const wireframe = new WireframeGeometry(geometry);
@@ -101,7 +108,7 @@
     }
   };
 
-  const Render = function (tiles) {
+  const Render = function (tiles: string | any[]) {
     // Scene
     const width = 800;
     const height = 400;
@@ -118,7 +125,7 @@
       controls.lock();
     });
 
-    const onKeyDown = function (event) {
+    const onKeyDown = function (event: { code: any }) {
       switch (event.code) {
         case "ArrowUp":
         case "KeyW":
@@ -139,7 +146,7 @@
       }
     };
 
-    const onKeyUp = function (event) {
+    const onKeyUp = function (event: { code: any }) {
       switch (event.code) {
         case "ArrowUp":
         case "KeyW":

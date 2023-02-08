@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import * as d3 from "d3";
+
   import { LayeredMapViz } from "../lib/LayeredMapViz";
   import { TILE_URL } from "../lib/db";
 
   export let id: string;
-  export let name: string = "";
   export let loading = true;
-  export let error = null;
+  export let error: string;
 
   let el: Element;
   let map: any;
@@ -39,7 +39,6 @@
           return;
         }
 
-        name = data[0].name;
         map = new LayeredMapViz(el, id, id, data);
         map.draw();
 

@@ -5,7 +5,6 @@
   import { TILE_URL } from "../lib/db";
 
   export let id: string;
-  export let name: string;
   export let loading = true;
   export let error: string;
 
@@ -39,7 +38,6 @@
           return;
         }
 
-        name = data[0].name;
         map = new ExplodedMapViz(el, id, id, data);
         map.draw();
 

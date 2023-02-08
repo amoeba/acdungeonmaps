@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-import type { TileData } from "../types";
+import type { TileData } from "../types/types";
 
 // TODO: Move to a more appropriate place
 const width = 600;

@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-import type { TileData } from "../types";
+import type { TileData } from "../types/types";
 
 const width = 300;
 const height = 300;
@@ -18,7 +18,7 @@ export class ExplodedMapViz {
   id: string;
   name: string;
   data: TileData[];
-  infoEl: Element;
+  infoEl: Element | null;
   scaleX: any; // TODO: Type
   scaleY: any; // TODO: Type
   offset: number;
@@ -28,9 +28,11 @@ export class ExplodedMapViz {
     this.id = id;
     this.name = name;
     this.data = data;
+    this.infoEl = null;
+    this.offset = 0;
   }
 
-  drawLevel(level) {
+  drawLevel(level: TileData[]) {
     // SVG
     const svg = d3.create("svg");
 
@@ -81,7 +83,7 @@ export class ExplodedMapViz {
       .attr("onerror", "this.remove()");
   }
 
-  getRotateTransform(d, x, y): string {
+  getRotateTransform(d: TileData, x: any, y: any): string {
     let out = 0;
     const offset = x(tileSize) - x(tileSize / 2);
 
