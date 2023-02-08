@@ -4,6 +4,7 @@
 
   /** @type {import('./$types').LayoutServerData} */
   export let VERCEL_GIT_COMMIT_SHA;
+  export let IS_DEV_BUILD;
 </script>
 
 <Header />
@@ -12,4 +13,4 @@
 </main>
 <Footer />
 
-`{VERCEL_GIT_COMMIT_SHA}`
+`{VERCEL_GIT_COMMIT_SHA}``{IS_DEV_BUILD}`
