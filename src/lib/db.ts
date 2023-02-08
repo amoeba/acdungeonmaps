@@ -5,7 +5,7 @@ const DUNGEONS_TBL_NAME = "dungeons";
 export const DB_HOST = import.meta.env.VITE_DB_URI || `http://127.0.01:8001`;
 
 const LANDBLOCK_NAME_QUERY = function (id: string): string {
-  return `SELECT%20name%20FROM%20dungeons%20WHERE%20landblock_id%20=%20%220001%22%20LIMIT%201;`;
+  return `SELECT%20name%20FROM%20dungeons%20WHERE%20landblock_id%20=%20%22${id}%22%20LIMIT%201;`;
 };
 
 export const LANDBLOCK_NAME_URL = function (id: string): string {
