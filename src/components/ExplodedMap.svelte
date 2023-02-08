@@ -49,7 +49,7 @@
         loading = false;
         error = `Error fetching tiles: ${e}`;
 
-        throw(e)
+        throw e;
       });
   });
 </script>

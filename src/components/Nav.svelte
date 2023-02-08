@@ -1,13 +1,10 @@
 <nav>
   <ul>
     <li>
-      <a href="/">Dungeon List</a
-      >
+      <a href="/">Dungeon List</a>
     </li>
     <li>
-      <a href="https://github.com/amoeba/acdungeonmaps"
-        >GitHub</a
-      >
+      <a href="https://github.com/amoeba/acdungeonmaps">GitHub</a>
     </li>
   </ul>
 </nav>

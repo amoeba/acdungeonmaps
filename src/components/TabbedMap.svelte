@@ -3,56 +3,57 @@
   import LayeredMap from "./LayeredMap.svelte";
   import ThreeDeeMap from "./ThreeDeeMap.svelte";
 
-  export let id;
+  export let id: string;
 
-  let contentEl
+  let contentEl;
 
   const tabs = {
-    "exploded": {
+    exploded: {
       label: "Exploded",
-      component: ExplodedMap
+      component: ExplodedMap,
     },
-    "layered": {
+    layered: {
       label: "Layered",
-      component: LayeredMap
+      component: LayeredMap,
     },
     "3d": {
       label: "3D",
-      component: ThreeDeeMap
-    }
-  }
+      component: ThreeDeeMap,
+    },
+  };
 
   let activeTab = "exploded";
   let currentComponent = tabs[activeTab].component;
 
-  const onTabClick = (e) => {
+  const onTabClick = (e: Event) => {
     const id = e.target.dataset.tab;
 
     switchTab(id);
-  }
+  };
 
   const switchTab = (id: string) => {
     currentComponent = tabs[id].component;
     activeTab = id;
-  }
+  };
 </script>
 
 <div class="tabs">
   <div class="tab-bar">
     {#each Object.keys(tabs) as tab}
-    <div
-      class="tab"
-      class:selected="{activeTab === tab}"
-      on:click={onTabClick}
-      data-tab={tab}>
-      { tabs[tab].label }
-    </div>
+      <div
+        class="tab"
+        class:selected={activeTab === tab}
+        on:click={onTabClick}
+        on:keypress={onTabClick}
+        data-tab={tab}
+      >
+        {tabs[tab].label}
+      </div>
     {/each}
   </div>
   <div class="tab-content" bind:this={contentEl}>
-    <svelte:component this={currentComponent} id={id} />
+    <svelte:component this={currentComponent} {id} />
   </div>
-
 </div>
 
 <style>

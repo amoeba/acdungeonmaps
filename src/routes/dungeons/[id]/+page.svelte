@@ -1,13 +1,13 @@
 <script>
-import TabbedMap from "../../../components/TabbedMap.svelte";
+  import TabbedMap from "../../../components/TabbedMap.svelte";
 
-/** @type {import('./$types').PageData} */
-export let data;
+  /** @type {import('./$types').PageData} */
+  export let data;
 </script>
 
 <svelte:head>
   {#if data.name}
-  <title>{data.name} (0x{data.id})</title>
+    <title>{data.name} (0x{data.id})</title>
   {/if}
 </svelte:head>
 

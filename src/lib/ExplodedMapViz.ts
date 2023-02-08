@@ -1,5 +1,5 @@
-import * as d3 from 'd3';
-import type { TileData } from "../types/types"
+import * as d3 from "d3";
+import type { TileData } from "../types/types";
 
 const width = 300;
 const height = 300;
@@ -7,35 +7,33 @@ const margin = {
   top: 0,
   right: 0,
   bottom: 0,
-  left: 0
-}
+  left: 0,
+};
 
 const tileSize = 10;
 
 export class ExplodedMapViz {
-  el: Element
-  id: string
-  name: string
-  data: TileData[]
-  infoEl: Element
-  scaleX: any // TODO: Type
-  scaleY: any // TODO: Type
-  offset: number
+  el: Element;
+  id: string;
+  name: string;
+  data: TileData[];
+  infoEl: Element;
+  scaleX: any; // TODO: Type
+  scaleY: any; // TODO: Type
+  offset: number;
 
   constructor(el: Element, id: string, name: string, data: TileData[]) {
-    this.el = el
-    this.id = id
-    this.name = name
-    this.data = data
+    this.el = el;
+    this.id = id;
+    this.name = name;
+    this.data = data;
   }
 
   drawLevel(level) {
     // SVG
     const svg = d3.create("svg");
 
-    svg
-      .attr("width", 300)
-      .attr("height", 300);
+    svg.attr("width", 300).attr("height", 300);
 
     const containerNode = document.createElement("div");
     containerNode.classList.add("map-container");
@@ -47,36 +45,39 @@ export class ExplodedMapViz {
     containerNode.appendChild(mapTitle);
     containerNode.appendChild(svg.node());
 
-    this.el.appendChild(containerNode)
+    this.el.appendChild(containerNode);
 
     // Layer for drawing
     const g = svg.append("g");
 
     // Zoom + pan behavior
-    const zoom = d3.zoom().on("zoom", e => {
-      g.attr("transform", e.transform)
+    const zoom = d3.zoom().on("zoom", (e) => {
+      g.attr("transform", e.transform);
     });
 
-    svg.call(zoom)
-      .call(zoom.transform, d3.zoomIdentity);
+    svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
 
     // TODO: Work on this
     zoom.scaleTo(svg.transition().duration(0), 0.5);
     zoom.translateTo(svg.transition().duration(0), width - 15, height - 35);
 
     // Tiles
-    g
-      .selectAll(".tile")
+    g.selectAll(".tile")
       .data(level)
       .join("image")
-      .attr("x", d => this.scaleX(d.x))
-      .attr("y", d => this.scaleY(d.y))
-      .attr("width", d => this.scaleX(tileSize))
-      .attr("height", d => this.scaleY(tileSize))
-      .attr("transform", d => this.getRotateTransform(d, this.scaleX, this.scaleY))
-      .attr("data-rotation", d => d.rotation)
-      .attr("xlink:href", (d: TileData) => "/tiles/" + d.environment_id + ".bmp")
-      .attr("onerror", "this.remove()")
+      .attr("x", (d) => this.scaleX(d.x))
+      .attr("y", (d) => this.scaleY(d.y))
+      .attr("width", (d) => this.scaleX(tileSize))
+      .attr("height", (d) => this.scaleY(tileSize))
+      .attr("transform", (d) =>
+        this.getRotateTransform(d, this.scaleX, this.scaleY)
+      )
+      .attr("data-rotation", (d) => d.rotation)
+      .attr(
+        "xlink:href",
+        (d: TileData) => "/tiles/" + d.environment_id + ".bmp"
+      )
+      .attr("onerror", "this.remove()");
   }
 
   getRotateTransform(d, x, y): string {
@@ -87,41 +88,49 @@ export class ExplodedMapViz {
 
     if (w == 1) {
       out = 0;
-    }
-    else if (w < -0.70 && w > -0.8) {
+    } else if (w < -0.7 && w > -0.8) {
       out = -90;
-    }
-    else if (w > 0.70 && w < 0.8) {
+    } else if (w > 0.7 && w < 0.8) {
       out = 90;
     } else {
       out = 180;
     }
 
-    return "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")";
+    return (
+      "rotate(" + out + " " + (x(d.x) + offset) + " " + (y(d.y) + offset) + ")"
+    );
   }
 
   computeScales() {
-    this.scaleX = d3.scaleLinear()
+    this.scaleX = d3
+      .scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.x))
       .range([margin.left, width - margin.right]);
 
-    this.scaleY = d3.scaleLinear()
+    this.scaleY = d3
+      .scaleLinear()
       .domain(d3.extent(this.data, (d: TileData) => d.y))
       .range([height - margin.bottom, margin.top]);
 
     // Square up x and y domains
     if (this.scaleX.domain()[1] < Math.abs(this.scaleY.domain()[0])) {
-      this.scaleX.domain([d3.min(this.data, (d: TileData) => d.x), Math.abs(this.scaleY.domain()[0])])
+      this.scaleX.domain([
+        d3.min(this.data, (d: TileData) => d.x),
+        Math.abs(this.scaleY.domain()[0]),
+      ]);
     } else if (this.scaleX.domain()[1] > Math.abs(this.scaleY.domain()[0])) {
-      this.scaleY.domain([-this.scaleX.domain()[1], d3.max(this.data, (d: TileData) => d.y)])
+      this.scaleY.domain([
+        -this.scaleX.domain()[1],
+        d3.max(this.data, (d: TileData) => d.y),
+      ]);
     }
   }
 
   draw() {
-    const grouped = d3.group(this.data, (d: TileData) => d.z)
+    const grouped = d3.group(this.data, (d: TileData) => d.z);
     this.computeScales();
 
-    grouped.forEach(g => {
+    grouped.forEach((g) => {
       this.drawLevel(g);
     });
   }
