@@ -1,8 +1,8 @@
-import { VERCEL_COMMIT_REF } from "$env/static/private";
+import { VERCEL_GIT_COMMIT_SHA } from "$env/static/private";
 
 /** @type {import('./$types').LayoutServerLoad} */
 export function load() {
   return {
-    VERCEL_COMMIT_REF: VERCEL_COMMIT_REF,
+    VERCEL_GIT_COMMIT_SHA: VERCEL_GIT_COMMIT_SHA,
   };
 }
