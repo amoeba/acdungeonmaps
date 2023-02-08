@@ -6,6 +6,8 @@
     const res = await fetch(LANDBLOCK_NAME_URL(params.id));
     const data = await res.json();
 
+    throw new Error("Hello!");
+
     return {
       props: {
         id: params.id,

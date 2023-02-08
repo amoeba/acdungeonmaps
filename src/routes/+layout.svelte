@@ -1,5 +1,8 @@
 <script lang="ts">
   import Nav from "../components/Nav.svelte";
+
+    /** @type {import('./$types').LayoutServerData} */
+    export let data;
 </script>
 
 <header>
@@ -10,6 +13,7 @@
 <slot />
 
 <footer>
+  <div>
   Code used to generated this site is based on code from <a
     href="https://github.com/amoeba/dereth-cartography">David Simpson</a
   >, <a href="https://github.com/paradoxlost">parad0x</a>, the
@@ -18,6 +22,10 @@
   <a href="https://gitlab.com/utilitybelt/utilitybelt.gitlab.io/">trevis</a>,
   and
   <a href="https://github.com/Rawaho/Pegasus/">Rawaho</a>.
+  </div>
+  <div>
+    <p>{data.deploymentGitBranch}.</p>
+  </div>
 </footer>
 
 <style>

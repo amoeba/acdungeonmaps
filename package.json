@@ -31,6 +31,9 @@
   },
   "type": "module",
   "dependencies": {
+    "@sentry/node": "^7.36.0",
+    "@sentry/svelte": "^7.36.0",
+    "@sentry/tracing": "^7.36.0",
     "@types/three": "^0.134.0",
     "d3": "^7.1.1",
     "three": "^0.134.0"
