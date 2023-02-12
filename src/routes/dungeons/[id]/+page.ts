@@ -7,7 +7,7 @@ export async function load({ params }) {
   const data = await res.json();
 
   // Handle tiles not found with a 404
-  if (!data || data["rows"] || data["rows"] <= 0) {
+  if (!data || !data["rows"] || data["rows"] <= 0) {
     throw error(404, {
       message: `No tiles found for dungeon with id 0x${params.id}`,
     });
