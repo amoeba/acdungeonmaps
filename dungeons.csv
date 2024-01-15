@@ -113,8 +113,7 @@ rowid,landblock_id,name
 112,009C,Kor-Gursha
 113,009D,Swamp Cavern
 114,009E,Tanada House of Water
-115,009F,Secret Chamber of Kresovus (Part 1: Trials of the Arm
-116, Mind, and Heart)
+115,009F,Secret Chamber of Kresovus (Part 1: Trials of the Arm, Mind, and Heart)
 117,00A0,Monouga Laboratory (80+)
 118,00A1,Monouga Laboratory (120+)
 119,00A2,Monouga Laboratory (150+)
@@ -167,8 +166,7 @@ rowid,landblock_id,name
 166,00E1,Path of the Blind (East)
 167,00E2,Ruschk Burial Mound
 168,00E3,Sclavus Umbral Forge
-169,00E4,Temple of the Three
-170, Ritual Chambers,
+169,00E4,Temple of the Three, Ritual Chambers
 171,00E5,Temple of the Three
 172,00E6,Prodigal Shadow Child's Lair
 173,00E7,Gardens of Menilesh
@@ -587,8 +585,7 @@ rowid,landblock_id,name
 586,03FE,Mossy Cave (Shoushi)
 587,1936,Archive (Dungeon)
 588,1A8E,Inner Stronghold (Entrance)
-589,24C0,Roots of Skuld
-590, Urd, and Verdandi
+589,24C0,Roots of Skuld, Urd, and Verdandi
 591,2842,Crystalline Portal (130+)
 592,3960,Apostate Excavation
 593,3FB1,Arrival Chamber
@@ -667,8 +664,7 @@ rowid,landblock_id,name
 666,5751,Deeper Catacombs (Crater Lair)
 667,5752,Deeper Catacombs (Olthoi Tunnels)
 668,5753,Deeper Catacombs (Lair of Death)
-669,5754,Catacombs (20.5S
-670, 7.6E),
+669,5754,Catacombs (20.5S, 7.6E)
 671,5756,Temple
 672,5760,Slave Master Sand Caves (Entrance 1)
 673,5765,Lost Ruins
@@ -859,8 +855,7 @@ rowid,landblock_id,name
 858,6549,Renegade Stronghold (Stonehold)
 859,654A,Renegade Stronghold (Tufa)
 860,654B,Renegade Stronghold (Shoushi)
-861,654C,Mysterious Hatch (77.9N
-862, 42.5W),
+861,654C,Mysterious Hatch (77.9N, 42.5W)
 863,654D,Hoshino Kei's Fortress
 864,6651,Hoshino Tower
 865,665E,Falatacot Temple (Part 1)
