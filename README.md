@@ -6,6 +6,11 @@ Dungeon maps for Asheron's Call in a browser. See [https://dungeonmaps.vercel.ap
 
 Based largely on work done by [Rawaho](https://github.com/Rawaho/) on [Pegasus](https://github.com/Rawaho/Pegasus/), [trevis on UtilityBelt](https://gitlab.com/utilitybelt/utilitybelt.gitlab.io/), and [ACE](https://acemulator.github.io/). Help in getting this working by parad0x and trevis.
 
+## Data Sources
+
+- `data/dungeons.csv`: Not sure
+- `data/vi2dungeons.csv`: <http://www.virindi.net/vstats/dungeonnames.php>
+
 ## Development
 
 ### Database
